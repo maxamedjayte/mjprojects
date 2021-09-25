@@ -1,0 +1,263 @@
+<html>
+{% load static %}
+<head>
+  <title>Xaadirka Fasalkan</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+</head>
+<style>
+  body {
+    font-family: 'Amiri', serif;
+    font-size: larger;
+    background-color: rgb(25, 7, 57);
+    text-align: right;
+  }
+  table thead th{
+    font-size: x-large;
+    font-weight: bolder;
+  }
+
+  .container {
+    background-color: rgb(25, 7, 57);
+    border-radius: 8px;
+    margin-bottom: 50px;
+  }
+
+  .back-arrow {
+    width: 100px;
+    height: 50px;
+    padding: 20px;
+  }
+
+  .back-arrow i {
+    color: white;
+    font-size: 50px;
+  }
+</style>
+
+<body>
+  <div class="back-arrow">
+    <a href="/ardadaXalqadaan/{{mustwaha}}/{{raqamka}}/"><i class="material-icons">arrow_back</i></a>
+
+
+  </div>
+  <br>
+  <div class="container">
+    {% for sanadDugsiyeedka in sanadDugsiyeedyada %}
+      <!-- <form action="/diwangali_imtixana_ardagan/{{mustwaha}}/{{raqamka}}/{{ardayga.magacaArdayga}}/" method="POST"></form> -->
+     
+      <div class="card">
+        <div class="card-header" dir="rtl">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="exampleInputEmail1">اسم الطالب </label>
+                <input disabled type="text" class="form-control" name="magaca-fasalka" style="font-size: x-large;" id="exampleInputEmail1"
+                  value="{{ardayga.magacaArdayga}}">
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="exampleInputEmail1">العام الدراسي </label>
+                <select name="sanad-dugsiyedka" class="form-control form-select" aria-label=".form-select-lg example">
+                  <option selected>{{sanadDugsiyeedka}}</option>
+
+                </select>
+              </div>
+            </div>
+           
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label for="exampleInputEmail1">اسم المستوي </label>
+                <input disabled type="text" class="form-control" name="magaca-fasalka" id="exampleInputEmail1"
+                  value="{{ardayga.mustawahaArdayga}}">
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="card-block table-border-style" dir="rtl">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="10px"></th>
+                  <th>اسم المادة</th>
+                  <th>{{magacyadaImtixanada.0}}</th>
+                  <th>{{magacyadaImtixanada.1}}</th>
+                  <th>{{magacyadaImtixanada.2}}</th>
+                  <th>{{magacyadaImtixanada.3}}</th>
+                  <th>مجموعة</th>
+                 
+                </tr>
+              </thead>
+              <tbody style="font-size: large;">
+                {% if hasImtixan %}
+                
+                {% for shafawi1,nisfi,shafawi2,aakhir in imtixanada %}
+                {% if shafawi1.sanadka == sanadDugsiyeedka and nisfi.sanadka == sanadDugsiyeedka and shafawi2.sanadka == sanadDugsiyeedka and aakhir.sanadka == sanadDugsiyeedka %}
+                <tr >
+                  <td></td>
+                  <td style="font-weight: bold;">{{shafawi1.maadada}}</td>
+                  <td class="editable" data-id="{{shafawi1.id}}" data-type="{{magacyadaImtixanada.0}}" >{{shafawi1.buundada}}</td>
+                  <td class="editable" data-id="{{nisfi.id}}" data-type="{{magacyadaImtixanada.1}}" >{{nisfi.buundada}}</td>
+                  <td class="editable" data-id="{{shafawi2.id}}" data-type="{{magacyadaImtixanada.2}}" >{{shafawi2.buundada}}</td>
+                  <td class="editable" data-id="{{aakhir.id}}" data-type="{{magacyadaImtixanada.3}}" >{{aakhir.buundada}}</td>
+                  <td id="total-ka" ></td>
+
+              </tr>
+                {% endif %}
+                {% endfor %}
+
+                {% else %}
+              <form action="/diiwangalinta_imtixaanka/{{sanadDugsiyeedka.pk}}/{{ardayga.magacaArdayga}}/">
+                {% for maadada in maadoyinka %}
+             
+                  <tr>
+                    <td width="10px"></td>
+                    <td style="font-size: x-large;">{{maadada}} </td>
+                    <td> <input type="text" class="form-control" 
+                        maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                    </td>
+                    <td><input type="text" class="form-control" 
+                        maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                    </td>
+                    <td> <input type="text" class="form-control"
+                        maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                    </td>
+                    <td> <input type="text" class="form-control"
+                        maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                    </td>
+                    <td><input type="text" name="majmuuca" class="form-control" id="result" maxlength="4"
+                        id="exampleInputEmail1" placeholder="" disabled></td>
+
+                  </tr>
+                
+                {% endfor %}
+                <script>
+                   $(document).ready(function(){
+                     console.log('{{sanadDugsiyedka}}');
+                     console.log("waanak");
+                   });
+                </script>
+                <button type="submit" style="float:left;margin-left: 30px;" class="btn btn-mat waves-effect waves-light btn-success">Save</button>
+             
+              </form>
+                {% endif %}
+
+              </tbody>
+
+            </table>
+            
+           
+            <br><br>
+          </div>
+          <!-- <div class="save-buttons" style="text-align: left; margin-left: 30px;margin-bottom: 30px;">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="submit" class="btn btn-primary">save</button>
+          </div> -->
+
+        </div>
+
+
+      </div>
+      <br>
+      <br>
+
+    {% endfor %}
+
+  </div>
+
+
+  <script>
+    
+    $(document).ready(function(){
+      console.log("dsadsad");
+      function updateTotalka(){
+        console.log("dsadsad");
+        $('tr').each(function(){
+        var totalMarks=0;
+        $(this).find('.editable').each(function(){
+          var marks=$(this).text();
+          if(marks.length!==0){
+            totalMarks+=parseFloat(marks);
+          };
+        });
+        $(this).find('#total-ka').html(totalMarks);
+      });
+      }
+      updateTotalka();
+      
+
+      $(document).on("click",".editable",function(){
+        var value=$(this).text();
+        var input="<input type='number' maxlength='2' class='input-data' style='width:80px;border:1px solid red;' value='"+value+"' class='form-control' >";
+        $(this).html(input);
+        $(this).removeClass("editable");
+        
+      });
+
+
+      $(document).on("blur",".input-data",function(){
+        var value=$(this).val();
+        var td=$(this).parent("td");
+        $(this).remove();
+        td.html(value);
+        td.addClass("editable");
+        var type=td.data("type");
+        saveTheData(td.data("id"),value,type);
+        updateTotalka();
+      });
+
+      $(document).on('keypress',".input-data",function(e){
+        var key= e.which;
+        if(key==13){
+          var value=$(this).val();
+          var td=$(this).parent("td");
+          $(this).remove();
+          td.html(value);
+          td.addClass('editable');
+          var type=td.data("type");
+          saveTheData(td.data("id"),value,type);
+          updateTotalka();
+        }
+      });
+
+      function saveTheData(id,value,type){
+        $.ajax({
+        type:'POST',
+        url:'/save_garenta_buundada/',
+        data:{
+          'id':id,
+          'buundada':value,
+          'imtixanka':type,
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+        }
+      })
+      }
+    });
+
+
+
+    
+  </script>
+</body>
+
+</html>

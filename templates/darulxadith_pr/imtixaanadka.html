@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block title %} Diwangalinta Ardayga {% endblock %}
+
+{% block content %}
+<!--     
+<link href="{% static "hijriDateStyle/samples/css/bootstrap.css" %}" rel="stylesheet" />
+<link href="{% static "hijriDateStyle/samples/css/bootstrap-datetimepicker.css" %}" rel="stylesheet" /> -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+
+
+<div class="pcoded-content" dir="rtl" style="text-align: right; font-family: 'Amiri', serif;">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">اختر الحلقة</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <form method="post" action="/mustawa/" enctype="multipart/form-data">
+
+                                        {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">كل الحلقات</label>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <select name="sanad-dugsiyedka" class="form-control"
+                                                        style='padding-right: 30px;width:350px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                        required style="text-align: center;">
+                                                        <option disabled selected> أخنر المستوي </option>
+                                                        {% for xalqada in xalqadaha %}
+                                                            <option onclick="location.href='/ardadaXalqadaan/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/'">{{xalqada}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                       
+                                        
+
+                                        <button type="submit" name="submit"
+                                            class="btn btn-success waves-effect waves-light">ابخت</button>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                            <!-- table -->
+                            {% if not ardada %}
+
+                            {% else %}
+                            
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">كل الحلقات</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-hover">
+                                        <thead class="thead-dark">
+                                            <th width="10px"style="font-size: 20px;" >الرقم</th>
+                                            <th style="font-size: 20px;">اسم الطالب</th>
+                                            <th style="font-size: 20px;">الحلقة</th>
+                                            <th style="font-size: 20px;">العام الدراسي</th>
+                                            <th style="font-size: 20px;">عدد حلقاتة</th>
+                                            <th style="font-size: 20px;">عدد الطلاب</th>
+                                            <th width='10px' ></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for ardayga in ardada %}
+                                            <tr onclick="location.href='/qaadista_buundoyinka/{{ardayga.mustawahaArdayga.mustawaha}}/{{ardayga.mustawahaArdayga.magacaXalqada}}/{{ardayga}}/'">
+                                                 <td>{{ forloop.counter }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga.mustawahaArdayga }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga.sanadDugsiyeedka }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga }}</td>
+                                                <td><button class="btn-success" >+</button></td>
+                                            </tr>
+                                               
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  
+                                   
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="styleSelector">
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+
+
+
+
+
+{% endblock %}

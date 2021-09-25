@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block title %} Diwangalinta Ardayga {% endblock %}
+
+{% block content %}
+<!--     
+<link href="{% static "hijriDateStyle/samples/css/bootstrap.css" %}" rel="stylesheet" />
+<link href="{% static "hijriDateStyle/samples/css/bootstrap-datetimepicker.css" %}" rel="stylesheet" /> -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="{% static "hijriStatic/css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet" />
+
+
+<div class="pcoded-content" dir="rtl" style="text-align: right; font-family: 'Amiri', serif;">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">تسجيل الحلقة</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+
+                                    <form method="post" action="/xalqadaha/" enctype="multipart/form-data">
+
+                                        {% csrf_token %}
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">اختر المستوي</label>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <select name="magaca-mustawaha" class="form-control"
+                                                        style='padding-right: 30px;width:350px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                        required style="text-align: center;">
+                                                        {% for mustawaha in mustawayasha %}
+                                                            <option>{{mustawaha}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">اختر الرقم</label>
+                                            <div class="row">
+                                                <div class="col-sm-8">
+                                                    <select name="magaca-xalqada" class="form-control"
+                                                        style='padding-right: 30px;width:350px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                        required style="text-align: center;">
+                                                            <option>أ</option>
+                                                            <option>ب</option>
+                                                            <option>ج</option>
+                                                            <option>د</option>
+                                                      
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                       
+                                    
+
+                                        <button type="submit" name="submit"
+                                            class="btn btn-success waves-effect waves-light">سجل</button>
+                                    </form>
+                                </div>
+                            </div>
+
+
+                            <!-- table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">كل الحلقات</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-hover">
+                                        <thead class="thead-dark">
+                                            <th width="10px" >الرقم</th>
+                                            <th>رقم الفصل </th>
+                                            <th>المستوي</th>
+                                            <th>عدد الطلاب</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for xalqada in xalqadaha %}
+                                            <tr onclick="location.href='/xogta_xalqadaan/{{xalqada.pk}}/' ">
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ xalqada }}</td>
+                                                <td>{{ xalqada.mustawaha }}</td>
+                                                <td>{{ xalqada.all.count }}</td>
+                                               
+                                            </tr>
+                                               
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="styleSelector">
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<script src="{% static " hijriStatic/js/bootstrap-hijri-datetimepickermin.js" %}"></script>
+
+
+
+<script type="text/javascript">
+
+    // $('.btn-success').click(function () {
+    //     $.ajax({
+    //         url: '/mustawa/',
+    //         type: 'post',
+    //         data: {
+    //             'sanadDugsiyedka': document.getElementById('sanad-dugsiyedka').value,
+    //             'magacaMustawaha': document.getElementById('magaca-mustawaha').value,
+    //             'maadoyinka': document.getElementById('maadoyinka').value,
+    //             'csrfmiddlewaretoken': '{{ csrf_token }}',
+    //         },
+    //         success: function (respond) {
+    //             alert(respond.success);
+    //         }
+
+
+    //     });
+    // });
+
+
+    $(function () {
+        initFromHijri();
+        initToHijri();
+    });
+    function initFromHijri() {
+        $("#hijri-picker-from").hijriDatePicker({
+            hijri: true,
+            showSwitcher: false,
+            // allowInputToggle: true,
+            // debug:true
+        });
+    }
+    function initToHijri() {
+        $("#hijri-picker-to").hijriDatePicker({
+            hijri: true,
+            showSwitcher: false,
+            // allowInputToggle: true,
+            // debug:true
+        });
+    }
+
+</script>
+
+{% endblock %}

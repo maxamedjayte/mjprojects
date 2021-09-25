@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block title %} Diwangalinta Ardayga {% endblock %}
+
+{% block content %}
+<!--     
+<link href="{% static "hijriDateStyle/samples/css/bootstrap.css" %}" rel="stylesheet" />
+<link href="{% static "hijriDateStyle/samples/css/bootstrap-datetimepicker.css" %}" rel="stylesheet" /> -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+<style>
+    table tr th{
+        font-size:x-large;
+        
+    }
+    table tr td{
+        font-size: large;
+    }
+</style>
+<link href="{% static "hijriStatic/css/bootstrap-datetimepicker.min.css" %}" rel="stylesheet" />
+
+
+<div class="pcoded-content" dir="rtl" style="text-align: right; font-family: 'Amiri', serif;">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            
+
+                            <!-- table -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;font-size: large;">كل الحلقات</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-hover">
+                                        <thead class="thead-dark">
+                                            <th width="10px" >الرقم</th>
+                                            <th>رقم الفصل </th>
+                                            <th>العام</th>
+                                            <th>عدد الطلاب</th>
+                                            <th class="text-left" ></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for xalqada in xalqadaha %}
+                                            <tr onclick="location.href='/xaadiriska_xalqadaan/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/'">
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ xalqada }}</td>
+                                                <td>{{ xalqada.mustawaha.sanadDugsiyeedka}}</td>
+                                                <td></td>
+                                                <td class="text-left" ><a href="/attendece_print/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/اتثي/"><input class="btn btn-primary" style="background-color:red;margin-left:5px;margin-right:5px;margin-top: -10px;margin-bottom: -10px;" type="button" value="بنات"></a><a href="/attendece_print/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/ذكر/"><input class="btn btn-primary" style="margin-top: -10px;margin-bottom: -10px;" type="button" value="ينين"></a></td>
+                                            </tr>
+                                               
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="styleSelector">
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<script src="{% static " hijriStatic/js/bootstrap-hijri-datetimepickermin.js" %}"></script>
+
+
+
+<script type="text/javascript">
+
+    $('tr').click(function () {
+        $.ajax({
+            url: '/xaadiriska_xalqadaan/',
+            type: 'post',
+            data: {
+                'xalqada': '{{xalqada.mustawaha}}',
+                'raqamka': '{{xalqada.magacaXalqada}}',
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function (respond) {
+                alert(respond.success);
+            }
+
+
+        });
+    });
+
+
+    $(function () {
+        initFromHijri();
+        initToHijri();
+    });
+    function initFromHijri() {
+        $("#hijri-picker-from").hijriDatePicker({
+            hijri: true,
+            showSwitcher: false,
+            // allowInputToggle: true,
+            // debug:true
+        });
+    }
+    function initToHijri() {
+        $("#hijri-picker-to").hijriDatePicker({
+            hijri: true,
+            showSwitcher: false,
+            // allowInputToggle: true,
+            // debug:true
+        });
+    }
+
+</script>
+
+{% endblock %}

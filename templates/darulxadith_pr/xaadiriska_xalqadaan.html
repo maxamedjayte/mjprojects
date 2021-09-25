@@ -1,0 +1,462 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from colorlib.com/polygon/admindek/default/dt-advance.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Dec 2019 16:09:26 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <title>Admindek | Admin Template</title>
+
+
+    <!--[if lt IE 10]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description"
+        content="Admindek Bootstrap admin template made using Bootstrap 4 and it has huge amount of ready made feature, UI components, pages which completely fulfills any dashboard needs." />
+    <meta name="keywords"
+        content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+    <meta name="author" content="colorlib" />
+
+    <link rel="icon" href="https://colorlib.com/polygon/admindek/files/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet"> 
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "css/waves.min.css" %}" type="text/css" media="all">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/feather.css" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/themify-icons.css" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/font-awesome.min.css" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/datatables.bootstrap4.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/buttons.datatables.min.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/responsive.bootstrap4.min.css" %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "css/pages.css" %}">
+
+    <style>
+        table tbody tr td input {
+            transform: scale(1.8);
+            margin-left: 10px;
+            margin-right: 10px;
+            color:green;
+        }
+        table thead tr th{
+            font-size: x-large;
+        }
+    </style>
+
+
+</head>
+
+<body >
+  <div  style="width: 100%;height: 100vh;padding: 30px; background-color: rgb(12, 6, 46);" >
+    <div class="back-arrow" style="text-align: left;" >
+            <a href="/xaadiriska/"><i style="color: white;font-size: 40px;" class="material-icons">arrow_back</i></a>
+    </div>
+          <br>
+          
+          <div class="card">
+      
+            <div class="card-block">
+                <div class="row" style="text-align: right; font-family: 'Amiri', serif;font-size: x-large;">
+        
+                <div class="col-sm-6">
+                    <div class="col-sm-6">
+                    <label>{{ardadaXalqadaan.count}}</label>
+                    <label style="font-weight: bold;font-size: 30;"> : عدد الطلاب</label>
+        
+        
+        
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label id="fasalka" >{{xalqada}} ({{raqamka}})</label>
+                    <label style="font-weight: bold;font-size: 30;"> : المستوي</label>
+        
+        
+        
+                </div>
+        
+                </div>
+                <div class="table-responsive dt-responsive">
+                    <table id="dom-jqry"
+                        class="table table-striped table-bordered nowrap" style="text-align: right; font-family: 'Amiri', serif;font-size: larger;" dir="rtl">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width=10px>الرقم</th>
+                                <th>الطالب</th>
+                                <th>السبت</th>
+                                <th>الاحد</th>
+                                <th>الاثنين</th>
+                                <th>الثلثاء</th>
+                                <th>الاربعاء</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for ardayga in ardadaXalqadaan %}
+                            <tr>
+                              <td>{{ forloop.counter }}</td>
+                              <td style="font-size: x-large;" name="magacaArdada[]" id="magacaArdada">{{ardayga.magacaArdayga}}</td>
+                              <td>
+                                <input type="checkbox" name="sabti-1[]" id="sabti1" checked>
+                                <input type="checkbox" name="sabti-2[]" id="sabti2" checked>
+                                <input type="checkbox" name="sabti-3[]" id="sabti3" checked>
+                                <input type="checkbox" name="sabti-4[]" id="sabti4" checked>
+                              </td>
+                              <td>
+                                <input type="checkbox" name="axad-1[]" checked>
+                                <input type="checkbox" name="axad-2[]" checked>
+                                <input type="checkbox" name="axad-3[]" checked>
+                                <input type="checkbox" name="axad-4[]" checked>
+                              </td>
+                              <td>
+                                <input type="checkbox" name="isniin-1[]" checked>
+                                <input type="checkbox" name="insiin-2[]" checked>
+                                <input type="checkbox" name="isniin-3[]" checked>
+                                <input type="checkbox" name="insiin-4[]" checked>
+                              </td>
+                              <td>
+                                <input type="checkbox" name="talaado-1[]" checked>
+                                <input type="checkbox" name="talaado-2[]" checked>
+                                <input type="checkbox" name="talaado-3[]" checked>
+                                <input type="checkbox" name="talaado-4[]" checked>
+                              </td>
+                              <td>
+                                <input type="checkbox" name="arbaco-1[]" checked>
+                                <input type="checkbox" name="arbaco-2[]" checked>
+                                <input type="checkbox" name="arbaco-3[]" checked>
+                                <input type="checkbox" name="arbaco-4[]" checked>
+                              </td>
+                  
+                              {% endfor %}
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div class="modal-footer" style="text-align: left;" dir="rtl">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-primary" id="btn-send">save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+    
+
+
+<script>
+    document.getElementById("btn-send").onclick = function() {
+      let xalqada = '{{xalqada}}';
+      let raqamka = '{{raqamka}}';
+
+
+      let sabti1=[];
+      let sabti2=[];
+      let sabti3=[];
+      let sabti4=[];
+      let axad1=[];
+      let axad2=[];
+      let axad3=[];
+      let axad4=[];
+      let isniin1=[];
+      let isniin2=[];
+      let isniin3=[];
+      let isniin4=[];
+      let talaado1=[];
+      let talaado2=[];
+      let talaado3=[];
+      let talaado4=[];
+      let arbaco1=[];
+      let arbaco2=[];
+      let arbaco3=[];
+      let arbaco4=[];
+
+      // sabti
+      $("input[type='checkbox'][name='sabti-1[]']").each(function(){
+        if($(this).is(":checked")){
+          sabti1.push(1);
+        }else{
+          sabti1.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='sabti-2[]']").each(function(){
+        if($(this).is(":checked")){
+          sabti2.push(1);
+        }else{
+          sabti2.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='sabti-3[]']").each(function(){
+        if($(this).is(":checked")){
+          sabti3.push(1);
+        }else{
+          sabti3.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='sabti-4[]']").each(function(){
+        if($(this).is(":checked")){
+          sabti4.push(1);
+        }else{
+          sabti4.push(0);
+        }
+
+      });
+
+
+      // axad
+      $("input[type='checkbox'][name='axad-1[]']").each(function(){
+        if($(this).is(":checked")){
+          axad1.push(1);
+        }else{
+          axad1.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='axad-2[]']").each(function(){
+        if($(this).is(":checked")){
+          axad2.push(1);
+        }else{
+          axad2.push(0);
+        }
+
+      });
+
+      $("input[type='checkbox'][name='axad-3[]']").each(function(){
+        if($(this).is(":checked")){
+          axad3.push(1);
+        }else{
+          axad3.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='axad-4[]']").each(function(){
+        if($(this).is(":checked")){
+          axad4.push(1);
+        }else{
+          axad4.push(0);
+        }
+
+      });
+
+
+      // isnin
+      $("input[type='checkbox'][name='isniin-1[]']").each(function(){
+        if($(this).is(":checked")){
+          isniin1.push(1);
+        }else{
+          isniin1.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='insiin-2[]']").each(function(){
+        if($(this).is(":checked")){
+          isniin2.push(1);
+        }else{
+          isniin2.push(0);
+        }
+
+      });
+
+      $("input[type='checkbox'][name='isniin-3[]']").each(function(){
+        if($(this).is(":checked")){
+          isniin3.push(1);
+        }else{
+          isniin3.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='insiin-4[]']").each(function(){
+        if($(this).is(":checked")){
+          isniin4.push(1);
+        }else{
+          isniin4.push(0);
+        }
+
+      })
+
+      // talado
+      $("input[type='checkbox'][name='talaado-1[]']").each(function(){
+        if($(this).is(":checked")){
+          talaado1.push(1);
+        }else{
+          talaado1.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='talaado-2[]']").each(function(){
+        if($(this).is(":checked")){
+          talaado2.push(1);
+        }else{
+          talaado2.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='talaado-3[]']").each(function(){
+        if($(this).is(":checked")){
+          talaado3.push(1);
+        }else{
+          talaado3.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='talaado-4[]']").each(function(){
+        if($(this).is(":checked")){
+          talaado4.push(1);
+        }else{
+          talaado4.push(0);
+        }
+
+      });
+      // arbaco
+      $("input[type='checkbox'][name='arbaco-1[]']").each(function(){
+        if($(this).is(":checked")){
+          arbaco1.push(1);
+        }else{
+          arbaco1.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='arbaco-2[]']").each(function(){
+        if($(this).is(":checked")){
+          arbaco2.push(1);
+        }else{
+          arbaco2.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='arbaco-3[]']").each(function(){
+        if($(this).is(":checked")){
+          arbaco3.push(1);
+        }else{
+          arbaco3.push(0);
+        }
+
+      });
+      $("input[type='checkbox'][name='arbaco-4[]']").each(function(){
+        if($(this).is(":checked")){
+          arbaco4.push(1);
+        }else{
+          arbaco4.push(0);
+        }
+
+      });
+
+
+      $.ajax({
+        url:"/qaadista_xadiriska/"+xalqada+"/"+raqamka+"/",
+        method:"post",
+        dataType:"Json",
+        data:{
+          'sabti1':sabti1,'sabti2':sabti2,'sabti3':sabti3,'sabti4':sabti4,
+          'axad1':axad1,'axad2':axad2,'axad3':axad3,'axad4':axad4,
+          'isniin1':isniin1,'isniin2':isniin2,'isniin3':isniin3,'isniin4':isniin4,
+          'talaado1':talaado1,'talaado2':talaado2,'talaado3':talaado3,'talaado4':talaado4,
+          'arbaco1':arbaco1,'arbaco2':arbaco2,'arbaco3':arbaco3,'arbaco4':arbaco4,
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+        },
+        success:function(response){
+            if (response.success) {
+              alert("Waad  Xaadirisay Xalqadaan");
+            } else {
+              alert("Horay Ayaad U Xaadirisay Xalqadaan");
+            }
+        },
+        
+      });
+
+
+
+    }
+    function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // for column one
+            td1 = tr[i].getElementsByTagName("td")[1]; // for column two
+            /* ADD columns here that you want you to filter to be used on */
+            if (td) {
+                if ((td.innerHTML.toUpperCase().indexOf(filter) > -1) || (td1.innerHTML.toUpperCase().indexOf(filter) > -1)) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+  </script>                         
+                    
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/jquery.min.js" %}"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/jquery-ui.min.js" %}"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/popper.min.js" %}"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/bootstrap.min.js" %}"></script>
+
+    <script src="{% static "js/waves.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/jquery.slimscroll.js" %}"></script>
+
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/modernizr.js" %}"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/css-scrollbars.js" %}"></script>
+
+    <script src="{% static "js/waves.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+
+    <script src="{% static "js/jquery.datatables.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/datatables.buttons.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/jszip.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/pdfmake.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/vfs_fonts.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/buttons.print.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/buttons.html5.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/datatables.bootstrap4.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/datatables.responsive.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/responsive.bootstrap4.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+
+    <script src="{% static "js/data-table-custom.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/pcoded.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/vertical-layout.min.js" %}" type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script src="{% static "js/jquery.mcustomscrollbar.concat.min.js" %}"
+        type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript" src="{% static "js/script.js" %}"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"
+        type="1dc21dc544476ddffbc54af6-text/javascript"></script>
+    <script type="1dc21dc544476ddffbc54af6-text/javascript">
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+    </script>
+    <script src="{% static "js/rocket-loader.min.js" %}" data-cf-settings="1dc21dc544476ddffbc54af6-|49" defer=""></script>
+
+
+</body>
+
+<!-- Mirrored from colorlib.com/polygon/admindek/default/dt-advance.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 12 Dec 2019 16:09:26 GMT -->
+
+</html>

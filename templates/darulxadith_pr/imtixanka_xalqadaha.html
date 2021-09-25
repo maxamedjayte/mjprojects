@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block title %}Xalqadaha {% endblock %}
+
+{% block content %}
+<!--     
+<link href="{% static "hijriDateStyle/samples/css/bootstrap.css" %}" rel="stylesheet" />
+<link href="{% static "hijriDateStyle/samples/css/bootstrap-datetimepicker.css" %}" rel="stylesheet" /> -->
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"> -->
+
+
+<div class="pcoded-content" dir="rtl" style="text-align: right; font-family: 'Amiri', serif;">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                           
+
+
+                        
+                            
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">كل الحلقات</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table table-hover">
+                                        <thead class="thead-dark">
+                                            <th width="10px"style="font-size: 20px;" >الرقم</th>
+                                            <th style="font-size: 20px;">اسم الحلقة</th>
+                                            <th style="font-size: 20px;">المواد</th>
+                                            <th style="font-size: 20px;">العام الدراسي</th>
+                                            <th width='10px' ></th>
+                                        </thead>
+                                        <tbody>
+                                            {% for xalqada in xalqadaha %}
+                                            <tr onclick="location.href='/imtixanka_xalqadaan/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/'">
+                                                 <td>{{ forloop.counter }}</td>
+                                                <td style="font-size: 18px;" >{{ xalqada }}</td>
+                                                <td style="font-size: 18px;" >{{ xalqada.mustawaha.maadoyinka }}</td>
+                                                <td style="font-size: 18px;" >{{ xalqada.mustawaha.sanadDugsiyeedka }}</td>
+                                                
+                                            </tr>
+                                               
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  
+                                   
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="styleSelector">
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+
+
+
+
+
+{% endblock %}

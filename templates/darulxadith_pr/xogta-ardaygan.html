@@ -1,0 +1,660 @@
+{% extends 'base.html' %}
+
+{% block title %}Xogta Ardaygan{% endblock %}
+
+{% block dashHearder %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<div style="height: 60px;background-color: rgba(12, 5, 5, 0.571);border-radius: 0px;" class="card">
+
+</div>
+{% endblock %}
+{% block content %}
+<style>
+    .variable-ka-ardayga {
+        font-size: 20px;
+        font-weight: bold;
+        color: black;
+    }
+
+    .value-ga-ardayga {
+        font-size: 17x;
+    }
+
+    #trueId {
+        font-size: large;
+        color: rgb(0, 255, 0);
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 25px;
+    }
+
+    #falseId {
+        font-size: large;
+        color: rgb(255, 0, 25);
+        border: 1px solid black;
+        padding: 5px;
+        border-radius: 25px;
+    }
+</style>
+<div class="pcoded-content" dir="rtl"
+    style="text-align: right; font-family: 'Amiri', serif;font-size: larger;font-weight: bolder;">
+    <div class="pcoded-inner-content">
+
+        <div class="main-body">
+            <div class="page-wrapper">
+
+                <div class="page-body">
+                    <div class="modal fade" style="text-align: right; font-family: 'Amiri', serif;font-size: larger;" dir="rtl"
+                        id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <form action="/diiwangalinta_mulaaxadatka/{{ardaygan.magacaArdayga}}/" method="POST">
+                                {% csrf_token %}
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">ملاحظات هذا الطالب</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">عنوان </label>
+                                                <input type="text" name="cinwanka" class="form-control" id="recipient-name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="message-text" class="col-form-label">معلومات اخر</label>
+                                                <textarea class="form-control" name="faahfahin" id="message-text"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>&nbsp;&nbsp;
+                                        <button type="submit" class="btn btn-primary">سحل</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12" dir="rtl" style="text-align: right;font-family: 'Amiri', serif;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 style="font-family: 'Amiri', serif;">معلومات هذا الطالب</h5>
+                                <button style="float: left;"onclick="updateArdayga()"  type="button" class="btn btn-success">Update</button>
+                            </div>
+                            <div class="card-block">
+
+                                <form method="post" enctype="multipart/form-data" action="/diwangalinta_ardada/">
+
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">اسم الطالب</label>
+                                            <div class="col-sm-12">
+                                                <input name="magaca-ardayga" placeholder="اسم الطالب" type="text" value="{{ardaygan.magacaArdayga}}" class="form-control" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">الجنس </label>
+                                            <div class="col-sm-12">
+                                                <select name="jinsiga" class="form-control"
+                                                    style='padding-right: 30px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                    required style="text-align: center;">
+                                                    <option  selected >{{ardaygan.jinsiga}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <div class="col-sm-10" style=" height: 100px;border: 1px solid grey;">
+                                              
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">مكان الميلاد</label>
+                                            <div class="col-sm-12">
+                                                <input  name="meesha-dhalashada" value="{{ardaygan.meeshaDhalashada}}" placeholder="مكان الميلاد" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">تاريخ الميلاد</label>
+                                            <div class="col-sm-12">
+                                                <input  name="tarikhda-dhalashada" value="{{ardaygan.waqtigaDhalashada}}" placeholder="تاريخ الميلاد"  id="hijri-picker"  type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">رقم الهاتف</label>
+                                            <div class="col-sm-12">
+                                                <input  name="numberka-ardayga" placeholder="هاتف الطالب" value="{{ardaygan.numberkaArdayga}}"  type="number" maxlength="9" class="form-control">
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-5 col-form-label">مستوى الطالب</label>
+                                            <div class="col-sm-12">
+                                                <select name="mustawaha" class="form-control"
+                                                    style='padding-right: 30px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                    required style="text-align: center;">
+                                                   
+                                                        <option>{{ardaygan.mustawahaArdayga}}</option>
+                                                 
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">ولي الامر</label>
+                                            <div class="col-sm-12">
+                                                <input  name="magaca-masuulka" placeholder="اسم المسؤول" value="{{ardaygan.magacaMasuulka}}" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-5 col-form-label">تلفون ولي الامر</label>
+                                            <div class="col-sm-12">
+                                                <input name="numberka-masuulka" placeholder="رقم الهاتف " value="{{ardaygan.numberkaMasuulka}}" disabled  type="number" maxlength="9" class="form-control" >
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label"> العام الدراسي</label>
+                                            <div class="col-sm-12">
+                                                <select name="sanaddugsiyedka" class="form-control"
+                                                    style='padding-right: 30px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
+                                                    required style="text-align: center;">
+                                                    {% for sanadDugsiyedka in sanadDugsiyeedyada %}
+                                                        <option value="{{sanadDugsiyedka.id}}" >{{ardaygan.sanadDugsiyedka}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label class="col-sm-4 col-form-label">تاريخ التسجيل</label>
+                                            <div class="col-sm-12">
+                                                <input name="waqtiga-diwaangalinta" placeholder="تاريخ التسجيل" value="{{ardaygan.tarikhdaDiwangalinta}}"  type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                       
+                                        
+                                    </div>
+                               
+                                    <br>
+
+                                    
+                                </form>
+                            </div>
+                        </div>
+
+
+                        <div class="card" id="exzamcard">
+                            <div class="card-header">
+                                <h5 style="font-size: xx-large;">الامتحانات</h5>
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% for sanadDugsiyeedka in sanadDugsiyeedyada %}
+                                <!-- <form action="/diwangali_imtixana_ardagan/{{mustwaha}}/{{raqamka}}/{{ardayga.magacaArdayga}}/" method="POST"></form> -->
+                                <script>
+                                    $(document).ready(function(){
+                                        $.ajax({
+                                        type:'POST',
+                                        url:'/has_imtixan/',
+                                        data:{
+                                            'sanadka':'{{sanadDugsiyeedka.id}}',
+                                            'magacaArdayga':'{{ardaygan.magacaArdayga}}',
+                                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                                        },
+                                        success:function(response){
+                                            function updateTotalka(){
+                                            $('tr').each(function(){
+                                            var totalMarks=0;
+                                            $(this).find('.editable').each(function(){
+                                                var marks=$(this).text();
+                                                if(marks.length!==0){
+                                                totalMarks+=parseFloat(marks);
+                                                };
+                                            });
+                                            $(this).find('#total-ka').html(totalMarks);
+                                            });
+                                            }
+                                            updateTotalka();
+                                            if (response.hasImtixan) {
+                                                $("#exzamcard").append(
+                                                    `
+                                                    <div class="card">
+                                                        <div class="card-header" dir="rtl">
+                                                        <div class="row">
+                                                            <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">اسم الطالب </label>
+                                                                <input disabled type="text" class="form-control" name="magaca-fasalka" style="font-size: x-large;" id="exampleInputEmail1"
+                                                                value="{{ardaygan.magacaArdayga}}">
+                                                            </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <label for="exampleInputEmail1">العام الدراسي </label>
+                                                                <select name="sanad-dugsiyedka" class="form-control form-select" aria-label=".form-select-lg example">
+                                                                <option selected>{{sanadDugsiyeedka}}</option>
+
+                                                                </select>
+                                                            </div>
+                                                            </div>
+                                                        
+                                                            <div class="col-sm-3">
+                                                            <!-- <div class="form-group">
+                                                                <label for="exampleInputEmail1">اسم المستوي </label>
+                                                                <input disabled type="text" class="form-control" name="magaca-fasalka" id="exampleInputEmail1"
+                                                                value="{{ardaygan.mustawahaArdayga}}">
+                                                            </div> -->
+                                                            </div>
+
+                                                        </div>
+
+                                                        </div>
+                                                        <div class="card-block table-border-style" dir="rtl">
+                                                        <div class="table-responsive">
+                                                            <table class="table">
+                                                            <thead class="thead-dark">
+                                                                <tr>
+                                                                <th width="10px"></th>
+                                                                <th>اسم المادة</th>
+                                                                <th>{{magacyadaImtixanada.0}}</th>
+                                                                <th>{{magacyadaImtixanada.1}}</th>
+                                                                <th>{{magacyadaImtixanada.2}}</th>
+                                                                <th>{{magacyadaImtixanada.3}}</th>
+                                                                <th>مجموعة</th>
+                                                                
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody style="font-size: large;">
+                                                                {% for shafawi1,nisfi,shafawi2,aakhir in imtixanada %}
+                                                                <!-- {{shafawi1.sanadka}}{{nisfi.buundada}}{{shafawi2}}{{aakhir}} -->
+                                                                    {% if shafawi1.sanadka == sanadDugsiyeedka and nisfi.sanadka == sanadDugsiyeedka and shafawi2.sanadka == sanadDugsiyeedka and aakhir.sanadka == sanadDugsiyeedka %}
+                                                                
+                                                                    <tr >
+                                                                        <td></td>
+                                                                        <td style="font-size: x-large;">{{shafawi1.maadada}}</td>
+                                                                        <td class="editable" data-id="{{shafawi1.id}}" data-type="{{magacyadaImtixanada.0}}" >{{shafawi1.buundada}}</td>
+                                                                        <td class="editable" data-id="{{nisfi.id}}" data-type="{{magacyadaImtixanada.1}}" >{{nisfi.buundada}}</td>
+                                                                        <td class="editable" data-id="{{shafawi2.id}}" data-type="{{magacyadaImtixanada.2}}" >{{shafawi2.buundada}}</td>
+                                                                        <td class="editable" data-id="{{aakhir.id}}" data-type="{{magacyadaImtixanada.3}}" >{{aakhir.buundada}}</td>
+                                                                        <td id="total-ka" ></td>
+
+                                                                    </tr>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                
+
+                                                            
+
+
+                                                                
+
+                                                            </tbody>
+
+                                                            </table>
+                                                        </div>
+                                                        <!-- <div class="save-buttons" style="text-align: left; margin-left: 30px;margin-bottom: 30px;">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">غلق</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button type="submit" class="btn btn-primary">save</button>
+                                                        </div> -->
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <br>
+                                                    
+                                                    `
+
+                                                )
+                                                updateTotalka();
+                                            } else {
+                                                $("#exzamcard").append(
+                                                    `
+                                                    <div class="card">
+                                                    <div class="card-header" dir="rtl">
+                                                        <div class="row">
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                            <label for="exampleInputEmail1">اسم الطالب </label>
+                                                            <input disabled type="text" class="form-control" name="magaca-fasalka" style="font-size: x-large;" id="exampleInputEmail1"
+                                                                value="{{ardayga.magacaArdayga}}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                            <label for="exampleInputEmail1">العام الدراسي </label>
+                                                            <select name="sanad-dugsiyedka" class="form-control form-select" aria-label=".form-select-lg example">
+                                                                <option selected>{{sanadDugsiyeedka}}</option>
+
+                                                            </select>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                            <label for="exampleInputEmail1">اسم المستوي </label>
+                                                            <input disabled type="text" class="form-control" name="magaca-fasalka" id="exampleInputEmail1"
+                                                                value="{{ardayga.mustawahaArdayga}}">
+                                                            </div>
+                                                        </div>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-block table-border-style" dir="rtl">
+                                                        <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th width="10px"></th>
+                                                                <th>اسم المادة</th>
+                                                                <th>{{magacyadaImtixanada.0}}</th>
+                                                                <th>{{magacyadaImtixanada.1}}</th>
+                                                                <th>{{magacyadaImtixanada.2}}</th>
+                                                                <th>{{magacyadaImtixanada.3}}</th>
+                                                                <th>مجموعة</th>
+                                                            
+                                                            </tr>
+                                                            </thead>
+                                                            <form action="/diiwangalinta_imtixaanka/{{sanadDugsiyeedka.pk}}/{{ardaygan.magacaArdayga}}/" method="POST">
+                                                            <tbody style="font-size: large;">
+                                                            
+                                                                {% csrf_token %}
+                                                                {% for maadada in maadoyinka %}
+                                                                    <tr>
+                                                                        <td width="10px"></td>
+                                                                        <td style="font-size: x-large;">{{maadada}} </td>
+                                                                        <td><input hidden name="{{magacyadaImtixanada.0}}"> <input required type="text" class="form-control"
+                                                                            maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        </td>
+                                                                        <td><input hidden name="{{magacyadaImtixanada.1}}"> <input type="text" class="form-control"
+                                                                            maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        </td>
+                                                                        <td><input hidden name="{{magacyadaImtixanada.2}}"> <input type="text" class="form-control"
+                                                                            maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        </td>
+                                                                        <td><input hidden name="{{magacyadaImtixanada.3}}"> <input type="text" class="form-control"
+                                                                            maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        </td>
+                                                                        <td><input type="text" name="majmuuca" class="form-control" id="result" maxlength="4"
+                                                                            id="exampleInputEmail1" placeholder="" disabled></td>
+                                                                       
+
+                                                                    </tr>
+                                                                {% endfor %}
+
+                                                            </tbody>
+                                                            
+                                                           
+                                                            </form>
+
+                                                            </table>
+                                                        </div>
+                                                    
+
+                                                        </div>
+
+
+                                                    </div>
+                                                    <br>
+                                                
+                                                    
+                                                    `
+                                                );
+                                                updateTotalka();
+                                            }
+                                            $('#exzamcard').append('</div>');
+                                          
+                                        }
+                                    })
+                                    });
+                                    </script>
+                                {% endfor %}
+
+                            <!-- <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <div style="width: 100%;height: 60px;background-color: rgb(52, 44, 65);"></div>
+                                    <table class="table">
+                                        <thead class="thead-dark" style="font-weight: bold;font-size: large;text-align: center;">
+
+                                            <th>اسم المادة</th>
+                                            <th>شفوي الاول</th>
+                                            <th>نصف</th>
+                                            <th>شفوي الثاني</th>
+                                            <th>ءاخر</th>
+                                            <th>مجموعة</th>
+
+                                        </thead>
+                                        <tbody style="font-size: large;text-align: center;">
+                                            {% for shafawi1,nisfi,shafawi2,aakhir in imtixanada %}
+                                            <tr>
+                                                <td style="font-weight: bold;">{{shafawi1.maadada}}</td>
+                                                <td>{{shafawi1.buundada}}</td>
+                                                <td>{{nisfi.buundada}}</td>
+                                                <td>{{shafawi2.buundada}}</td>
+                                                <td>{{aakhir.buundada}}</td>
+
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> -->
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>حطور هذا الطالب</h5>
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="thead-dark" style="font-weight: bold;font-size: large;text-align: right;">
+                                            <th>التاريخ</th>
+                                            <th>السبت</th>
+                                            <th>الاحد</th>
+                                            <th>الاثنين</th>
+                                            <th>الثلثاء</th>
+                                            <th>الاربعاء</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for xaadiritanka in xaadiriska %}
+                                                <tr>
+                                                    <td>{{xaadiritanka.waqtiga}}</td>
+                                                    <td>{% if xaadiritanka.sabti1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
+                                                    <td>{% if xaadiritanka.axad1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
+                                                    <td>{% if xaadiritanka.isniin1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.isniin2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.isniin3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.isniin4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
+                                                    <td>{% if xaadiritanka.talaado1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.talaado2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.talaado3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.talaado4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
+                                                    <td>{% if xaadiritanka.arbaco1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.arbaco2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.arbaco3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.arbaco4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row" style="padding-right: 20px;">
+                                    <h5>ملاحظات هذا الطالب</h5>
+                                </div>
+
+                                <div class="card-header-right">
+                                    <ul class="list-unstyled card-option">
+                                        <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                                        <li><i class="fa fa-window-maximize full-card"></i></li>
+                                        <li><i class="fa fa-minus minimize-card"></i></li>
+                                        <li><i class="fa fa-refresh reload-card"></i></li>
+                                        <li><i class="fa fa-trash close-card"></i></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-block table-border-style">
+                                <div class="table-responsive">
+                                    <div style="text-align: left;"> <a href="#" class="add" title="add" data-toggle="modal"
+                                            data-target="#exampleModal"><i style="font-size: 50px; color: green;"
+                                                class="material-icons">add</i></a></div>
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <th width='10px;'>الرقم</th>
+                                            <th>العنوان</th>
+                                            <th>التفاصيل</th>
+                                            <th>الوقت</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for mulaxada in mulaaxadaatka %}
+                                            <tr>
+                                                <td>{{mulaxada.pk}}</td>
+                                                <td>{{mulaxada.cinwanka}}</td>
+                                                <td>{{mulaxada.faahfahin}}</td>
+                                                <td>{{mulaxada.waqtiga}}</td>
+
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+function updateArdayga(){
+    magacaArdayga=document.getElementsByName('magaca-ardayga');
+    jinsiga=document.getElementsByName('jinsiga')[0].value;
+    meeshaDhalashada=document.getElementsByName('meesha-dhalashada')[0].value;
+    waqtigaDhalashada=document.getElementsByName('tarikhda-dhalashada')[0].value;
+    numberkaArdayga=document.getElementsByName('numberka-ardayga')[0].value;
+    mustawahaArdayga=document.getElementsByName('mustawaha')[0].value;
+    magacaMasuulka=document.getElementsByName('magaca-masuulka')[0].value;
+    numberkaMasuulka=document.getElementsByName('numberka-masuulka')[0].value;
+    sanadDugsiyedka=document.getElementsByName('sanaddugsiyedka')[0].value;
+    tarikhdaDiwangalinta=document.getElementsByName('waqtiga-diwaangalinta')[0].value;
+    
+    // $.ajax({
+    // type:'POST',
+    // url:'/update_ardayga/',
+    // success:function(response){},
+    // data:{
+    //     'magacaArdayga':magacaArdayga,
+    //     'jinsiga':jinsiga,
+    //     'meeshaDhalashada':meeshaDhalashada,
+    //     'waqtigaDhalashada':waqtigaDhalashada,
+    //     'numberkaArdayga':numberkaArdayga,
+    //     'mustawahaArdayga':mustawahaArdayga,
+    //     'magacaMasuulka':magacaMasuulka,
+    //     'numberkaMasuulka':numberkaMasuulka,
+    //     'sanadDugsiyedka':sanadDugsiyedka,
+    //     'tarikhdaDiwangalinta':tarikhdaDiwangalinta,
+    //     'csrfmiddlewaretoken': '{{ csrf_token }}',
+    // },
+    
+    
+    // })
+    
+    
+    }
+    
+    $(document).ready(function(){
+        
+      function updateTotalka(){
+        $('tr').each(function(){
+        var totalMarks=0;
+        $(this).find('.editable').each(function(){
+          var marks=$(this).text();
+          if(marks.length!==0){
+            totalMarks+=parseFloat(marks);
+          };
+        });
+        $(this).find('#total-ka').html(totalMarks);
+      });
+      }
+      updateTotalka();
+      
+
+      $(document).on("click",".editable",function(){
+        var value=$(this).text();
+        var input="<input type='number' maxlength='2' class='input-data' style='width:80px;border:1px solid red;' value='"+value+"' class='form-control' >";
+        $(this).html(input);
+        $(this).removeClass("editable");
+        
+      });
+
+
+      $(document).on("blur",".input-data",function(){
+        var value=$(this).val();
+        var td=$(this).parent("td");
+        $(this).remove();
+        td.html(value);
+        td.addClass("editable");
+        var type=td.data("type");
+        saveTheData(td.data("id"),value,type);
+        updateTotalka();
+      });
+
+      $(document).on('keypress',".input-data",function(e){
+        var key= e.which;
+        if(key==13){
+          var value=$(this).val();
+          var td=$(this).parent("td");
+          $(this).remove();
+          td.html(value);
+          td.addClass('editable');
+          var type=td.data("type");
+          saveTheData(td.data("id"),value,type);
+          updateTotalka();
+        }
+      });
+
+      function saveTheData(id,value,type){
+        $.ajax({
+        type:'POST',
+        url:'/save_garenta_buundada/',
+        data:{
+          'id':id,
+          'buundada':value,
+          'imtixanka':type,
+          'csrfmiddlewaretoken': '{{ csrf_token }}',
+        }
+      })
+      }
+    });
+
+</script>
+{% endblock %}
