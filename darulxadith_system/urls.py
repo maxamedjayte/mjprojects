@@ -29,5 +29,8 @@ urlpatterns = [
 
     path('qaadista_xadiriska/<str:xalqada>/<str:raqamka>/',views.qadistaXaadiriska),
 
-    path('attendece_print/<str:xalqada>/<str:raqamka>/<str:jinsiga>/',views.attendencePrint)
+    path('attendece_print/<str:xalqada>/<str:raqamka>/<str:jinsiga>/',views.attendencePrint),
+
+    path('diiwangalinta_mulaaxadatka/<str:magaca_ardayga>/',views.diiwangalintaMulaaxadatka),
+
 ]       

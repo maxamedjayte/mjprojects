@@ -2,7 +2,7 @@ from datetime import date, datetime, timedelta
 import re
 
 from django import http
-from darulxadith_system.models import Ardada, Mustawaha, Natiijada, SanadDugsiyeedka, Xaadiriska, Xalqada
+from darulxadith_system.models import Ardada, Mulaaxadaat, Mustawaha, Natiijada, SanadDugsiyeedka, Xaadiriska, Xalqada
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django.http import JsonResponse
@@ -12,7 +12,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 magacyadaImtixanada=['شفوي الاول','نصف','شفوي الثاني','ءاخر']
 sanadDugsiyeedkaHadda=SanadDugsiyeedka.objects.all().last()
 def dashboard(request):
-    return render(request,'darulxadith_pr/dashboard.html')
+    ardada=Ardada.objects.all().count()
+    wiilasha=Ardada.objects.filter(jinsiga='ذكر').count()
+    gabdhaha=Ardada.objects.filter(jinsiga='اتثي').count()
+    xalqadaha=Xalqada.objects.all().count()
+    xaadiriska=Xaadiriska.objects.all()
+    data={
+        'mulaaxadaatka':Mulaaxadaat.objects.all(),
+        'wiilasha':wiilasha,
+        'gabdhaha':gabdhaha,
+        'xalqadaha':xalqadaha,
+        'ardada':ardada,
+        'xaadiriksa':xaadiriska,
+        'mulaaxadaatka':Mulaaxadaat.objects.all().order_by('-id')[:10]
+    }
+    return render(request,'darulxadith_pr/dashboard.html',data)
 
 
 def sanadDugsiyedka(request):
@@ -201,6 +215,7 @@ def xogtaArdaygan(request,magaca_ardayga):
         hasImtixan=False
     data={
         'xaadiriska':xaadiriska,
+        'mulaaxadaatka':Mulaaxadaat.objects.filter(magacaArdayga=Ardada.objects.get(magacaArdayga=magaca_ardayga)),
         'hasImtixan':hasImtixan,
         'sanadDugsiyeedyada':SanadDugsiyeedka.objects.all(),
         'imtixanada':imtixanada,
@@ -417,3 +432,16 @@ def attendencePrint(request,xalqada,raqamka,jinsiga):
         'raqamka':raqamka
     }
     return render(request,'attendence_print.html',data)
+
+
+
+def diiwangalintaMulaaxadatka(request,magaca_ardayga):
+    cinwanka=request.POST.get('cinwanka'),
+    faahfahin=request.POST.get('faahfahin')
+
+    Mulaaxadaat.objects.create(
+        magacaArdayga=Ardada.objects.get(magacaArdayga=magaca_ardayga),
+        cinwanka=cinwanka,
+        faahfahin=faahfahin
+    )
+    return HttpResponseRedirect('/xogta_ardaygan/'+magaca_ardayga+'/')

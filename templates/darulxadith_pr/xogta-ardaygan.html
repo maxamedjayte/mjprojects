@@ -8,6 +8,7 @@
   
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <div style="height: 60px;background-color: rgba(12, 5, 5, 0.571);border-radius: 0px;" class="card">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </div>
 {% endblock %}
@@ -525,7 +526,7 @@
                                 <div class="table-responsive">
                                     <div style="text-align: left;"> <a href="#" class="add" title="add" data-toggle="modal"
                                             data-target="#exampleModal"><i style="font-size: 50px; color: green;"
-                                                class="material-icons">add</i></a></div>
+                                                class="material-icons">+</i></a></div>
                                     <table class="table">
                                         <thead class="thead-dark">
                                             <th width='10px;'>الرقم</th>
@@ -539,8 +540,6 @@
                                                 <td>{{mulaxada.pk}}</td>
                                                 <td>{{mulaxada.cinwanka}}</td>
                                                 <td>{{mulaxada.faahfahin}}</td>
-                                                <td>{{mulaxada.waqtiga}}</td>
-
                                             </tr>
                                             {% endfor %}
                                         </tbody>

@@ -31,113 +31,118 @@
     <div class="pcoded-inner-content">
         <div class="main-body">
             <div class="page-wrapper">
-                <div class="page-body">
+                <div class="page-body" dir="rtl" style="text-align: right;">
 
-                    <div class="row">
+                   <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-red text-white">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h4 class="m-b-0">{{ardada}}</h4>
+                                            <p class="m-b-0" style="font-size: 20px;">عدد الطلاب</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <i class="fas fa-user f-20"></i>
+                                        </div>
+                                    </div>
+                                    <div id="Widget-line-chart1" class="chart-line chart-shadow"
+                                        style="width:100%;height:75px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-blue text-white">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h4 class="m-b-0">{{wiilasha}}</h4>
+                                            <p class="m-b-0" style="font-size: 20px;">البنين</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <i class="fas fa-male f-20"></i>
+                                        </div>
+                                    </div>
+                                    <div id="Widget-line-chart2" class="chart-line chart-shadow"
+                                        style="width:100%;height:75px"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-green text-white">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h4 class="m-b-0">{{gabdhaha}}</h4>
+                                            <p class="m-b-0" style="font-size: 20px;">البنات</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <i class="fas fa-female f-20"></i>
+                                        </div>
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-yellow text-white">
+                                <div class="card-block">
+                                    <div class="row align-items-center">
+                                        <div class="col-8">
+                                            <h4 class="m-b-0">{{xalqadaha}}</h4>
+                                            <p class="m-b-0" style="font-size: 20px;">الحلفات</p>
+                                        </div>
+                                        <div class="col-4 text-right">
+                                            <i class="fas fa-users f-20"></i>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
 
-                        <div class="col-md-12 col-xl-8">
-                            <div class="card sale-card">
+
+
+
+
+
+                        <div class="col-xl-4 col-md-6">
+                            <div class="card testimonial-card table-card">
                                 <div class="card-header">
-                                    <h5>Deals Analytics</h5>
+                                    <h5>الملاحظات</h5>
+                                    
                                 </div>
                                 <div class="card-block">
-                                    <div id="sales-analytics" class="chart-shadow" style="height:380px"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-xl-4">
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Impressions</h6>
-                                            <h3 class="f-w-700 text-c-blue">1,563</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-eye bg-c-blue"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Goal</h6>
-                                            <h3 class="f-w-700 text-c-green">30,564</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-bullseye bg-c-green"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card comp-card">
-                                <div class="card-body">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h6 class="m-b-25">Impact</h6>
-                                            <h3 class="f-w-700 text-c-yellow">42.6%</h3>
-                                            <p class="m-b-0">May 23 - June 01 (2017)</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-hand-paper bg-c-yellow"></i>
-                                        </div>
+                                    <div class="review-block">
+                                        {% for mulaxada in mulaaxadaatka %}
+                                            <div class="row">
+                                                
+                                                <div class="col">
+                                                    <h6 class="m-b-15" style="font-weight: bolder;">{{mulaxada.magacaArdayga}}</h6>
+                                                    <div class="row align-items-center">
+                                                        <div class="col">
+                                                            
+                                                               
+                                                                    {{mulaxada.cinwanka}}
+                                                         
+                                                            
+                                                        </div>
+                                                        <div class="col">
+                                                            <h6 class="m-b-0">{{mulaxada.waqtiga}}</h6>
+                                                        </div>
+                                                    </div>
+                                                    <p class="m-t-15 m-b-0 text-muted">{{mulaxada.faahfahin}}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    
+                                        
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-
-                        <div class="col-xl-12">
-                            <div class="card proj-progress-card">
-                                <div class="card-block">
-                                    <div class="row">
-                                        <div class="col-xl-3 col-md-6">
-                                            <h6>Published Project</h6>
-                                            <h5 class="m-b-30 f-w-700">532<span
-                                                    class="text-c-green m-l-10">+1.69%</span></h5>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-c-red" style="width:25%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-md-6">
-                                            <h6>Completed Task</h6>
-                                            <h5 class="m-b-30 f-w-700">4,569<span class="text-c-red m-l-10">-0.5%</span>
-                                            </h5>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-c-blue" style="width:65%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-md-6">
-                                            <h6>Successfull Task</h6>
-                                            <h5 class="m-b-30 f-w-700">89%<span
-                                                    class="text-c-green m-l-10">+0.99%</span></h5>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-c-green" style="width:85%"></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-3 col-md-6">
-                                            <h6>Ongoing Project</h6>
-                                            <h5 class="m-b-30 f-w-700">365<span
-                                                    class="text-c-green m-l-10">+0.35%</span></h5>
-                                            <div class="progress">
-                                                <div class="progress-bar bg-c-yellow" style="width:45%"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-                    </div>
-
+                   </div>
                 </div>
             </div>
         </div>

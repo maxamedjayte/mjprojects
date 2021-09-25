@@ -91,3 +91,12 @@ class Xaadiriska(models.Model):
 
     def __str__(self):
         return str(self.xalqada)+"-"+ str(self.magacaArdayga)+"-"+str(self.waqtiga)
+
+class Mulaaxadaat(models.Model):
+    magacaArdayga=models.ForeignKey(Ardada,on_delete=models.CASCADE)
+    cinwanka=models.TextField()
+    faahfahin=models.TextField()
+    waqtiga=models.DateField(auto_now=True)
+
+    def __str__(self):
+        return str(self.magacaArdayga)+self.cinwanka
