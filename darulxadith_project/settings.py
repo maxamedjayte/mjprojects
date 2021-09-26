@@ -26,7 +26,7 @@ SECRET_KEY = 'ta32be*sj@vdx^4_r+h(qu_3ucp((vr)&w(rn&jjl8f6wekdfn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://darulxadith1.herokuapp.com/','darulxadith1.herokuapp.com/','127.0.0.0']
+ALLOWED_HOSTS = ['https://darulxadith1.herokuapp.com','darulxadith1.herokuapp.com','127.0.0.0','.darulxadith1.herokuapp.com']
 
 
 # Application definition
