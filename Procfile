@@ -1,0 +1,1 @@
+web: gunicorn darulxadith_project.wsgi --log-file -
