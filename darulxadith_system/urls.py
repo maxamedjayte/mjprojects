@@ -8,9 +8,11 @@ urlpatterns = [
     path('diwangalinta_ardada/',views.diiwangalintaArdada),
     path('xogta_ardada/',views.xogtaArdada),
     path('xogta_xalqadaan/<str:pk>/',views.xogtaXalqadaan),
+    path('xogta_mustawahaan/<str:pk>/',views.xogtaMustawahaan),
 
     path('xogta_ardaygan/<str:magaca_ardayga>/',views.xogtaArdaygan),
-    path('update_ardayga/',views.updateArdayga),
+    path('update_ardaygan/',views.updateArdaygan),
+    path('delete_ardaygaan/',views.deleteArdaygaan),
 
     path('imtixaanadka/',views.imtixaanadka),
     path('ardadaXalqadaan/<str:xalqada>/<str:raqamka>/',views.ardadaXalqadaan),
@@ -19,6 +21,7 @@ urlpatterns = [
     path('diiwangalinta_imtixaanka/<str:sanaddugsiyedka>/<str:magacaArdayga>/',views.diiwangalintaImtixaanka),
     path('imtixanka_xalqadaha/',views.imtixankaXalqadaha),
     path('imtixanka_xalqadaan/<str:xalqada>/<str:raqamka>/',views.imtixankaXalqadaan),
+    path('hel_imtixanka_xalqadaan/',views.hel_imtixankaXalqadaan),
 
 
 

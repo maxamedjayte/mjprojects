@@ -35,12 +35,12 @@
                                             <label class="col-sm-2 col-form-label">كل الحلقات</label>
                                             <div class="row">
                                                 <div class="col-sm-8">
-                                                    <select name="sanad-dugsiyedka" class="form-control"
+                                                    <select name="xalqadaha" id="xalqadaha" class="form-control"
                                                         style='padding-right: 30px;width:350px;height: 40px; border: 1px solid rgba(29, 29, 157, 0.427);border-radius: 5px;'
                                                         required style="text-align: center;">
                                                         <option disabled selected> أخنر المستوي </option>
                                                         {% for xalqada in xalqadaha %}
-                                                            <option onclick="location.href='/ardadaXalqadaan/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/'">{{xalqada}}</option>
+                                                            <option onchange="location.href='/ardadaXalqadaan/{{xalqada.mustawaha}}/{{xalqada.magacaXalqada}}/'">{{xalqada}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -50,8 +50,8 @@
                                        
                                         
 
-                                        <button type="submit" name="submit"
-                                            class="btn btn-success waves-effect waves-light">ابخت</button>
+                                        <!-- <button type="submit" 
+                                            class="btn btn-success waves-effect waves-light">ابخت</button> -->
                                     </form>
                                 </div>
                             </div>
@@ -75,8 +75,6 @@
                                             <th style="font-size: 20px;">اسم الطالب</th>
                                             <th style="font-size: 20px;">الحلقة</th>
                                             <th style="font-size: 20px;">العام الدراسي</th>
-                                            <th style="font-size: 20px;">عدد حلقاتة</th>
-                                            <th style="font-size: 20px;">عدد الطلاب</th>
                                             <th width='10px' ></th>
                                         </thead>
                                         <tbody>
@@ -85,9 +83,7 @@
                                                  <td>{{ forloop.counter }}</td>
                                                 <td style="font-size: 18px;" >{{ ardayga }}</td>
                                                 <td style="font-size: 18px;" >{{ ardayga.mustawahaArdayga }}</td>
-                                                <td style="font-size: 18px;" >{{ ardayga.sanadDugsiyeedka }}</td>
-                                                <td style="font-size: 18px;" >{{ ardayga }}</td>
-                                                <td style="font-size: 18px;" >{{ ardayga }}</td>
+                                                <td style="font-size: 18px;" >{{ ardayga.sanadDugsiyedka }}</td>
                                                 <td><button class="btn-success" >+</button></td>
                                             </tr>
                                                
@@ -113,8 +109,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 
-
-
+<script>
+    document.getElementById('xalqadaha').onchange=function(){
+        xalqada=$(this).val().split(" -- ")[0];
+        raqamka=$(this).val().split(" -- ")[1];
+        location.href='/ardadaXalqadaan/'+xalqada+'/'+raqamka+'/';
+    }
+</script>
 
 
 {% endblock %}

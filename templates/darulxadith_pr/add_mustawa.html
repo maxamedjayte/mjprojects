@@ -86,23 +86,19 @@
                                     <table class="table">
                                         <thead class="thead-dark">
                                             <th width="10px" >الرقم</th>
-                                            <th>اسم الطالب/th>
-                                            <th>الفصل</th>
+                                            <th>اسم الطالب</th>
+                                            <th>المواد</th>
                                             <th>العام الدراسي</th>
-                                            <th>عدد حلقاتة</th>
-                                            <th>عدد الطلاب</th>
-                                            <th width='10px' ></th>
+<!--                                             
+                                            <th width='10px' >Action</th> -->
                                         </thead>
                                         <tbody>
                                             {% for mustawaha in mustawayasha %}
-                                            <tr>
+                                            <tr onclick="location.href='/xogta_mustawahaan/{{mustawaha.pk}}'" >
                                                  <td>{{ forloop.counter }}</td>
                                                 <td>{{ mustawaha }}</td>
                                                 <td>{{ mustawaha.maadoyinka }}</td>
                                                 <td>{{ mustawaha.sanadDugsiyeedka }}</td>
-                                                <td>{{ mustawaha }}</td>
-                                                <td>{{ mustawaha }}</td>
-                                                <td><button class="btn-success" >+</button></td>
                                             </tr>
                                                
                                             {% endfor %}

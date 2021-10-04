@@ -119,9 +119,37 @@
 
 
   <script>
-    function diwangaliBuundoyinka(){
+   $('document').ready(function () {
+      $.ajax({
+      type:'POST',
+      url:'/hel_imtixanka_xalqadaan/',
+      data:{
+        'xalqada':'{{xalqada}}',
+        'raqamka':'{{raqamka}}',
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+      },
+      success:function (data) {
+        var Jimtixanadka =[];
 
-    }
+        console.log(typeof(data['imtixanadka']));
+        function myGFG() {
+          var obj = eval('(' + data+ ')');
+          var res = [];
+            
+          for(var i in obj)
+              res.push(obj[i]);
+            
+          console.log("Array of values - [" + res + "]");
+        }
+
+        myGFG();
+            
+        }
+      })
+      
+
+  
+   })
 
   </script>
 </body>

@@ -39,6 +39,15 @@
         padding: 5px;
         border-radius: 25px;
     }
+    input[type=checkbox]
+    {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    padding: 10px;
+    }
 </style>
 <div class="pcoded-content" dir="rtl"
     style="text-align: right; font-family: 'Amiri', serif;font-size: larger;font-weight: bolder;">
@@ -85,7 +94,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <h5 style="font-family: 'Amiri', serif;">معلومات هذا الطالب</h5>
-                                <button style="float: left;"onclick="updateArdayga()"  type="button" class="btn btn-success">Update</button>
+                                <button style="float: left;"onclick="updateArdayga()"  type="button" class="btn btn-success">Update</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button style="float: left;"onclick="deleteArdaygan({{ardaygan.id}},'{{ardaygan.magacaArdayga}}')"  type="button" class="btn btn-danger">Delete</button>
                             </div>
                             <div class="card-block">
 
@@ -160,7 +170,7 @@
                                         <div class="form-group col-sm-4">
                                             <label class="col-sm-5 col-form-label">تلفون ولي الامر</label>
                                             <div class="col-sm-12">
-                                                <input name="numberka-masuulka" placeholder="رقم الهاتف " value="{{ardaygan.numberkaMasuulka}}" disabled  type="number" maxlength="9" class="form-control" >
+                                                <input name="numberka-masuulka" placeholder="رقم الهاتف " value="{{ardaygan.numberkaMasuulka}}"   type="number" maxlength="9" class="form-control" >
                                             </div>
                                         </div>
                                         
@@ -372,41 +382,36 @@
                                                                 <th>{{magacyadaImtixanada.1}}</th>
                                                                 <th>{{magacyadaImtixanada.2}}</th>
                                                                 <th>{{magacyadaImtixanada.3}}</th>
-                                                                <th>مجموعة</th>
+                                                                <th><button onclick="test()" class="btn btn-mat waves-effect waves-light btn-success">Save</button></th>
                                                             
                                                             </tr>
                                                             </thead>
-                                                            <form action="/diiwangalinta_imtixaanka/{{sanadDugsiyeedka.pk}}/{{ardaygan.magacaArdayga}}/" method="POST">
+                                                          
                                                             <tbody style="font-size: large;">
-                                                            
+                                                                <form action='/diiwangalinta_imtixaanka/{{sanadDugsiyeedka.pk}}/{{ardayga.magacaArdayga}}/' method="post" id="buundoyinkaArdada">
                                                                 {% csrf_token %}
                                                                 {% for maadada in maadoyinka %}
                                                                     <tr>
                                                                         <td width="10px"></td>
                                                                         <td style="font-size: x-large;">{{maadada}} </td>
-                                                                        <td><input hidden name="{{magacyadaImtixanada.0}}"> <input required type="text" class="form-control"
-                                                                            maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                                                         </td>
-                                                                        <td><input hidden name="{{magacyadaImtixanada.1}}"> <input type="text" class="form-control"
-                                                                            maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                                                         </td>
-                                                                        <td><input hidden name="{{magacyadaImtixanada.2}}"> <input type="text" class="form-control"
-                                                                            maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                                                         </td>
-                                                                        <td><input hidden name="{{magacyadaImtixanada.3}}"> <input type="text" class="form-control"
-                                                                            maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                                                         </td>
-                                                                        <td><input type="text" name="majmuuca" class="form-control" id="result" maxlength="4"
-                                                                            id="exampleInputEmail1" placeholder="" disabled></td>
+                                                                      
                                                                        
 
                                                                     </tr>
                                                                 {% endfor %}
-
+                                                            </form>
                                                             </tbody>
                                                             
                                                            
-                                                            </form>
+                                                           
 
                                                             </table>
                                                         </div>
@@ -554,8 +559,11 @@
     </div>
 </div>
 <script>
+function test(){
+    document.getElementById('buundoyinkaArdada').submit();
+}
 function updateArdayga(){
-    magacaArdayga=document.getElementsByName('magaca-ardayga');
+    magacaArdayga=document.getElementsByName('magaca-ardayga')[0].value;
     jinsiga=document.getElementsByName('jinsiga')[0].value;
     meeshaDhalashada=document.getElementsByName('meesha-dhalashada')[0].value;
     waqtigaDhalashada=document.getElementsByName('tarikhda-dhalashada')[0].value;
@@ -565,29 +573,68 @@ function updateArdayga(){
     numberkaMasuulka=document.getElementsByName('numberka-masuulka')[0].value;
     sanadDugsiyedka=document.getElementsByName('sanaddugsiyedka')[0].value;
     tarikhdaDiwangalinta=document.getElementsByName('waqtiga-diwaangalinta')[0].value;
+  
+    $.ajax({
+    type:'POST',
+    url:'/update_ardaygan/',
+    success:function(response){
+        if (response) {
+            alert("Waad Update Gareeysay Ardaygaan");
+        }
+    },
+    data:{
+        'id':'{{ardaygan.pk}}',
+        'magacaArdayga':magacaArdayga,
+        'jinsiga':jinsiga,
+        'meeshaDhalashada':meeshaDhalashada,
+        'waqtigaDhalashada':waqtigaDhalashada,
+        'numberkaArdayga':numberkaArdayga,
+        'mustawahaArdayga':mustawahaArdayga,
+        'magacaMasuulka':magacaMasuulka,
+        'numberkaMasuulka':numberkaMasuulka,
+        'sanadDugsiyedka':sanadDugsiyedka,
+        'tarikhdaDiwangalinta':tarikhdaDiwangalinta,
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+    },
     
-    // $.ajax({
-    // type:'POST',
-    // url:'/update_ardayga/',
-    // success:function(response){},
-    // data:{
-    //     'magacaArdayga':magacaArdayga,
-    //     'jinsiga':jinsiga,
-    //     'meeshaDhalashada':meeshaDhalashada,
-    //     'waqtigaDhalashada':waqtigaDhalashada,
-    //     'numberkaArdayga':numberkaArdayga,
-    //     'mustawahaArdayga':mustawahaArdayga,
-    //     'magacaMasuulka':magacaMasuulka,
-    //     'numberkaMasuulka':numberkaMasuulka,
-    //     'sanadDugsiyedka':sanadDugsiyedka,
-    //     'tarikhdaDiwangalinta':tarikhdaDiwangalinta,
-    //     'csrfmiddlewaretoken': '{{ csrf_token }}',
-    // },
+    
+    })
     
     
-    // })
-    
-    
+    }
+    function deleteArdaygan(pk, magaca) {
+        swal({
+            title: "Delete Ardaygaan " + magaca + "?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                console.log("fsafas");
+                $.ajax({
+                type: 'POST',
+                url: '/delete_ardaygaan/',
+                data: {
+                    'id': pk,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',
+                },
+                success: function (response) {
+                    if (response) {
+                        swal("Waad Delete gareeysay " + magaca + "!", {
+                            icon: "success",
+                        });
+                        location.href("/xogta_ardada/");
+
+                    }
+                }
+                });
+
+            } else {
+
+            }
+        });
+
+
     }
     
     $(document).ready(function(){

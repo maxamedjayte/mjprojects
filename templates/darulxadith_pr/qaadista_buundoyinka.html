@@ -73,6 +73,18 @@
             },
             success:function(response){
                 if (response.hasImtixan) {
+                  function updateTotalka(){
+                      $('tr').each(function(){
+                      var totalMarks=0;
+                      $(this).find('.editable').each(function(){
+                        var marks=$(this).text();
+                        if(marks.length!==0){
+                          totalMarks+=parseFloat(marks);
+                        };
+                      });
+                      $(this).find('#total-ka').html(totalMarks);
+                    });
+                    }
                     $("#exzamcard").append(
                         `
                         <div class="card">
@@ -119,6 +131,7 @@
                                     <th>{{magacyadaImtixanada.3}}</th>
                                     <th>مجموعة</th>
                                   
+                                  
                                   </tr>
                                 </thead>
                                 <tbody style="font-size: large;">
@@ -159,6 +172,7 @@
                         
                         `
                     )
+                    updateTotalka();
                 } else {
                   function updateTotalka(){
                       $('tr').each(function(){
@@ -202,6 +216,7 @@
                                     value="{{ardayga.mustawahaArdayga}}">
                                 </div>
                               </div>
+                             
 
                             </div>
 
@@ -217,38 +232,35 @@
                                     <th>{{magacyadaImtixanada.1}}</th>
                                     <th>{{magacyadaImtixanada.2}}</th>
                                     <th>{{magacyadaImtixanada.3}}</th>
-                                    <th>مجموعة</th>
+                                    <th>مجموعة  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="test()" class="btn btn-mat waves-effect waves-light btn-success">Save</button></th>
+                                    
                                   
                                   </tr>
                                 </thead>
                                 <tbody style="font-size: large;">
+                                  <form action='/diiwangalinta_imtixaanka/{{sanadDugsiyeedka.pk}}/{{ardayga.magacaArdayga}}/' method="post" id="buundoyinkaArdada">
+                                    {% csrf_token %}
                                   {% for maadada in maadoyinka %}
-
+                                  
                                     <tr>
                                         <td width="10px"></td>
                                         <td style="font-size: x-large;">{{maadada}} </td>
-                                        <td><input hidden name="{{magacyadaImtixanada.0}}"> <input type="text" class="form-control"
-                                            maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.0}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                         </td>
-                                        <td><input hidden name="{{magacyadaImtixanada.1}}"> <input type="text" class="form-control"
-                                            maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                        <td <input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.1}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                         </td>
-                                        <td><input hidden name="{{magacyadaImtixanada.2}}"> <input type="text" class="form-control"
-                                            maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.2}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                         </td>
-                                        <td><input hidden name="{{magacyadaImtixanada.3}}"> <input type="text" class="form-control"
-                                            maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
+                                        <td><input type="text" class="form-control" maxlength="2" name="{{magacyadaImtixanada.3}}{{maadada}}" id="exampleInputEmail1" placeholder="">
                                         </td>
                                         <td><input type="text" name="majmuuca" class="form-control" id="result" maxlength="4"
                                             id="exampleInputEmail1" placeholder="" disabled></td>
-                                        <td>
-                                           <button onclick="test()" class="btn btn-mat waves-effect waves-light btn-success">Save</button>
-                                        </td>
+                               
                                            
 
                                     </tr>
                                 {% endfor %}
-                                        
+                                  </form>
 
                                 </tbody>
 
@@ -278,7 +290,7 @@
 
   <script>
     function test(){
-      console.log("dsa");
+      document.getElementById('buundoyinkaArdada').submit();
     }
     
     $(document).ready(function(){

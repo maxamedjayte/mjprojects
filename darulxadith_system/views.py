@@ -1,6 +1,6 @@
 from datetime import date, datetime, timedelta
 import re
-
+from django.core import serializers
 from django import http
 from darulxadith_system.models import Ardada, Mulaaxadaat, Mustawaha, Natiijada, SanadDugsiyeedka, Xaadiriska, Xalqada
 from django.shortcuts import render
@@ -8,13 +8,17 @@ from django.views.generic import CreateView
 from django.http import JsonResponse
 from hijri_converter import Hijri, Gregorian,convert
 from django.http import HttpResponse, HttpResponseRedirect
+from json import dumps
+from django.core.serializers import serialize
+from django.views.decorators.csrf import csrf_exempt
+from django.core import serializers
 # Create your views here.
 magacyadaImtixanada=['شفوي الاول','نصف','شفوي الثاني','ءاخر']
 sanadDugsiyeedkaHadda=SanadDugsiyeedka.objects.all().last()
 def dashboard(request):
     ardada=Ardada.objects.all().count()
     wiilasha=Ardada.objects.filter(jinsiga='ذكر').count()
-    gabdhaha=Ardada.objects.filter(jinsiga='اتثي').count()
+    gabdhaha=Ardada.objects.filter(jinsiga='انثي').count()
     xalqadaha=Xalqada.objects.all().count()
     xaadiriska=Xaadiriska.objects.all()
     data={
@@ -38,7 +42,10 @@ def sanadDugsiyedka(request):
         toGregDate=convert.Hijri(int(toHijriDate.split('-')[0]),int(toHijriDate.split('-')[1]),int(toHijriDate.split('-')[2])).to_gregorian()
 
         SanadDugsiyeedka.objects.create(taariikhdaBillowgaHijri=fromHijriDate,taariikhdaDhamaadkaHijri=toHijriDate,taariikhdaBillowgaMiladi=fromGregDate,taariikhdaDhamaadkaMIladi=toGregDate)
-    return render(request,'darulxadith_pr/diiwangalinta_sanad_dugsiyedka.html')
+    data={
+        'sanadDugsiyeedyada':SanadDugsiyeedka.objects.all()
+    }
+    return render(request,'darulxadith_pr/diiwangalinta_sanad_dugsiyedka.html',data)
 
 def registerMustawa(request):
     if request.POST:
@@ -54,9 +61,33 @@ def registerMustawa(request):
         'sanadDugsiyedyada':sanadDugsiyedyada,
         'mustawayasha':mustawayasha
     }
-  
-
     return render(request,'darulxadith_pr/add_mustawa.html',data)
+
+def xogtaMustawahaan(request,pk):
+    mustawahan=Mustawaha.objects.get(pk=pk)
+    
+    if request.POST:
+        print(request.POST.get('maadoyinka'))
+        mustawahan.maadoyinka=request.POST.get('maadoyinka')
+        mustawahan.save()
+        return JsonResponse({'response':True})
+    else:
+        xalqada=''
+        ardada=''
+        if Xalqada.objects.filter(mustawaha=mustawahan).exists():
+            xalqada=Xalqada.objects.filter(mustawaha=mustawahan).all
+            if Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).exists:
+                ardada=Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).count
+            else:
+                ardada='2'
+        else:
+            xalqada=''
+        data={
+            'mustawahan':mustawahan,
+            'xalqadaha':xalqada,
+            'ardadaMustahaan':ardada,
+        }
+        return render(request,'darulxadith_pr/xogta-mustawahaan.html',data)
 
 def addXalqad(request):
     state=''
@@ -66,7 +97,7 @@ def addXalqad(request):
     if request.POST:
         magacaMustawaha=request.POST.get('magaca-mustawaha')
         magacaXalqada=request.POST.get('magaca-xalqada')
-        if  Xalqada.objects.filter(magacaXalqada=magacaXalqada).exists():
+        if  Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=magacaMustawaha)).filter(magacaXalqada=magacaXalqada).exists():
             state="Horay ayuu u diiwangashnaa gashnaa"
             print(state)
         else:
@@ -129,9 +160,34 @@ def diiwangalintaArdada(request):
     }
 
     return render(request,'darulxadith_pr/diiwangalinta_ardada.html',data)
-def updateArdayga(request):
-    print("some think")
-    return JsonResponse({})
+def updateArdaygan(request):
+    mustawaha = request.POST.get('mustawahaArdayga').split(" -- ")[0]
+    raqamka = request.POST.get('mustawahaArdayga').split(" -- ")[1]
+    ardaygan=Ardada.objects.get(id=request.POST.get('id'))
+    ardaygan.magacaArdayga=request.POST.get('magacaArdayga')
+    ardaygan.jinsiga=request.POST.get('jinsiga')
+    ardaygan.meeshaDhalashada=request.POST.get('meeshaDhalashada')
+    ardaygan.waqtigaDhalashada=request.POST.get('waqtigaDhalashada')
+    ardaygan.numberkaArdayga=request.POST.get('numberkaArdayga')
+    # ardaygan.mustawahaArdayga= Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaArdayga=mustawaha))
+    ardaygan.magacaMasuulka=request.POST.get('magacaMasuulka')
+    ardaygan.numberkaMasuulka=request.POST.get('numberkaMasuulka')
+    # ardaygan.sanadDugsiyedka=request.POST.get('sanadDugsiyedka')
+    ardaygan.tarikhdaDiwangalinta=request.POST.get('tarikhdaDiwangalinta')
+    ardaygan.save()
+    
+    return JsonResponse({'response':True})
+
+
+def deleteArdaygaan(request):
+    status=False
+    ardaygan=Ardada.objects.get(pk=request.POST.get('id'))
+    if ardaygan.delete():
+        print("")
+        status=True
+    else:
+        status=False
+    return JsonResponse({'response':status})
 
 def xogtaArdada(request):
     ardada=Ardada.objects.all()
@@ -266,7 +322,7 @@ def helBuundoyinkaMadaKaste(request,xalqada,raqamka,magaca_ardayga):
     #         print(madada,imtixanka,buundada)
     return JsonResponse({'data':True})
     # return HttpResponseRedirect('/ardadaXalqadaan/'+xalqada+'/'+raqamka+'/')
-    
+@csrf_exempt    
 def diiwangalintaImtixaanka(request,sanaddugsiyedka,magacaArdayga):
     xalqada=Ardada.objects.get(magacaArdayga=magacaArdayga).mustawahaArdayga.mustawaha.magacaMustawaha
     raqamka=Ardada.objects.get(magacaArdayga=magacaArdayga).mustawahaArdayga.magacaXalqada
@@ -280,11 +336,11 @@ def diiwangalintaImtixaanka(request,sanaddugsiyedka,magacaArdayga):
                 sanadka=SanadDugsiyeedka.objects.get(id=sanaddugsiyedka),
                 xalqada=Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=xalqada)).get(magacaXalqada=raqamka),
                 maadada=madada,
-                buundada=buundada,
+                buundada=buundada if buundada!=None else 0,
                 # sanadDugsiyeedka=sanadDugsiyeedkaHadda,
                 tarikhdaLagalay=date.today()
                 )
-    return HttpResponseRedirect('/qaadista_buundoyinka/مستوي%20الاول/أ/أيمن%20علي%20عمر/')
+    return HttpResponseRedirect('/qaadista_buundoyinka/'+xalqada+'/'+raqamka+'/'+magacaArdayga+'/')
 
 
 def saveGareyBuundadaArdaygan(request):
@@ -302,20 +358,42 @@ def imtixankaXalqadaha(request):
     return render(request,'darulxadith_pr/imtixanka_xalqadaha.html',data)
 
 def imtixankaXalqadaan(request,xalqada,raqamka):
+   
     xalqadaan=Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=xalqada)).get(magacaXalqada=raqamka)
-    imtixaaka=Natiijada.objects.filter(xalqada=xalqadaan)
+    imtixanadka=Natiijada.objects.filter(xalqada=xalqadaan)
     dhamaanMaadonyinkaArdayga=Mustawaha.objects.get(magacaMustawaha=xalqada).maadoyinka.split(',')
-    print()
     data={
-        'imtixaanka':imtixaaka,
+        'xalqada':xalqada,
+        'raqamka':raqamka,
         'maadooyinka':dhamaanMaadonyinkaArdayga,
         'sanadDugsiyeedka':Mustawaha.objects.get(magacaMustawaha=xalqada).sanadDugsiyeedka,
-        'xalqada':xalqada,
-        'raqamka':raqamka
     }
     return render(request,'darulxadith_pr/imtixanka_xalqadaan.html',data)
 
+def hel_imtixankaXalqadaan(request):
+    xalqada=request.POST.get('xalqada')
+    raqamka=request.POST.get('raqamka')
+    xalqadaan=Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=xalqada)).get(magacaXalqada=raqamka)
+    imtixanadka=Natiijada.objects.filter(xalqada=xalqadaan)
+    dhamaanMaadonyinkaArdayga=Mustawaha.objects.get(magacaMustawaha=xalqada).maadoyinka.split(',')
 
+    # data={
+    #     'imtixaanka':imtixanadka,
+    #     'maadooyinka':dhamaanMaadonyinkaArdayga,
+    #     'sanadDugsiyeedka':Mustawaha.objects.get(magacaMustawaha=xalqada).sanadDugsiyeedka,
+    #     'xalqada':xalqada,
+    #     'raqamka':raqamka
+    # }
+    # all_objects = [*imtixanadka]
+    data = serializers.serialize("json", imtixanadka)
+    
+    return JsonResponse({
+        'imtixanadka':data,
+        'dhamaanMaadonyinkaArdayga':dhamaanMaadonyinkaArdayga,
+        # 'xalqadaan':xalqadaan,
+        'xalqada':xalqada,
+        'raqamka':raqamka
+        })
 
 
 def xaadiriska(request):

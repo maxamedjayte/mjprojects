@@ -12,7 +12,7 @@
     <style>
         .logoImage{
             width: 100%;
-            height: 12vh;
+            height: 10vh;
             background-color: black;
         }
         body {
@@ -52,10 +52,12 @@
             height:10%;
             width:1px;
             border:1px inset;
-            margin-left:50px;
+            margin-left:25px;
             margin-top:-6px;
+            margin-right:60px;
             margin-bottom:-6px;
         }
+       
         
     </style>
 </head>
@@ -96,7 +98,7 @@
           <thead class="thead-dark" style="font-size: x-large; background-color: black;">
             <tr>
               <th width="10px" scope="col">الرقم</th>
-              <th scope="col">اسم الطالب</th>
+              <th  width="200px" scope="col">اسم الطالب</th>
               <th scope="col">السبت</th>
               <th scope="col">الاحد</th>
               <th scope="col">الاثنين</th>
@@ -108,12 +110,11 @@
             {% for ardayga in ardada %}
             <tr>
               <th scope="row">{{ forloop.counter }}</th>
-              <td>
+              <td style="font-size: 20px;">
                 {{ardayga.magacaArdayga}}
               </td>
-              <td style="border-right: 1px solid black;">
-               
-                <div class="sepLine"></div>
+              <td class="td-lines" style="border-right: 1px solid black;">
+              
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
@@ -122,22 +123,18 @@
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
+              </td>
+              <td style="border-right: 1px solid black;">
+                <div class="sepLine"></div>
+                <div class="sepLine"></div>
                 <div class="sepLine"></div>
               </td>
               <td style="border-right: 1px solid black;">
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
-                <div class="sepLine"></div>
               </td>
               <td style="border-right: 1px solid black;">
-                <div class="sepLine"></div>
-                <div class="sepLine"></div>
-                <div class="sepLine"></div>
-                <div class="sepLine"></div>
-              </td>
-              <td style="border-right: 1px solid black;">
-                <div class="sepLine"></div>
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
                 <div class="sepLine"></div>
