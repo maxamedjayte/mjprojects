@@ -376,20 +376,22 @@ def hel_imtixankaXalqadaan(request):
     xalqadaan=Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=xalqada)).get(magacaXalqada=raqamka)
     imtixanadka=Natiijada.objects.filter(xalqada=xalqadaan)
     dhamaanMaadonyinkaArdayga=Mustawaha.objects.get(magacaMustawaha=xalqada).maadoyinka.split(',')
+    magacayadaArdayda=[]
+    buundadaArdaygaan=[]
 
-    # data={
-    #     'imtixaanka':imtixanadka,
-    #     'maadooyinka':dhamaanMaadonyinkaArdayga,
-    #     'sanadDugsiyeedka':Mustawaha.objects.get(magacaMustawaha=xalqada).sanadDugsiyeedka,
-    #     'xalqada':xalqada,
-    #     'raqamka':raqamka
-    # }
     # all_objects = [*imtixanadka]
-    data = serializers.serialize("json", imtixanadka)
+    # data = serializers.serialize("json", imtixanadka)
+    
+    for imt in imtixanadka:
+        if str(imt.magacaArdayga) not in magacayadaArdayda:
+           magacayadaArdayda.append(str(imt.magacaArdayga))
+           
     
     return JsonResponse({
-        'imtixanadka':data,
+        # 'imtixanadka':list(imtixanadka.values()),
+        'magacayadaArdayda':magacayadaArdayda,
         'dhamaanMaadonyinkaArdayga':dhamaanMaadonyinkaArdayga,
+        'magacyadaImtixanada':magacyadaImtixanada,
         # 'xalqadaan':xalqadaan,
         'xalqada':xalqada,
         'raqamka':raqamka

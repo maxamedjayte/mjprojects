@@ -96,8 +96,8 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody style="font-size: large;">
-               
+              <tbody class="tbodyC" style="font-size: large;">
+                
               </tbody>
           
             </table>
@@ -129,21 +129,23 @@
         'csrfmiddlewaretoken': '{{ csrf_token }}',
       },
       success:function (data) {
+        id=0;
         var Jimtixanadka =[];
-
-        console.log(typeof(data['imtixanadka']));
-        function myGFG() {
-          var obj = eval('(' + data+ ')');
-          var res = [];
-            
-          for(var i in obj)
-              res.push(obj[i]);
-            
-          console.log("Array of values - [" + res + "]");
-        }
-
-        myGFG();
-            
+        data['dhamaanMaadonyinkaArdayga'];
+        data['magacayadaArdayda'].forEach(magacayadaArdayga => {
+          id++;
+          $('.tbodyC').append(
+            `
+            <tr>
+              <td>
+                `+id+`  
+              </td>
+              <td>`+magacayadaArdayga+` </td>
+            </tr>
+            `
+          )
+        });
+         
         }
       })
       
