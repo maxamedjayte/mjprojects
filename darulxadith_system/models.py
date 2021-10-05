@@ -33,10 +33,10 @@ class Ardada(models.Model):
     sawirkaArdayga=models.ImageField(null=True,blank=True, upload_to="images/sawirada_ardada/")
     meeshaDhalashada=models.CharField(max_length=100,null=True,blank=True)
     waqtigaDhalashada=models.CharField(max_length=100,null=True,blank=True)
-    numberkaArdayga=models.IntegerField()
+    numberkaArdayga=models.IntegerField(null=True,default=0)
     mustawahaArdayga=models.ForeignKey(Xalqada,on_delete=models.CASCADE)
     magacaMasuulka=models.CharField(max_length=100,null=True,blank=True)
-    numberkaMasuulka=models.IntegerField()
+    numberkaMasuulka=models.IntegerField(null=True,default=0)
     sanadDugsiyedka=models.ForeignKey(SanadDugsiyeedka,on_delete=models.CASCADE,default=SanadDugsiyeedka.objects.all().last().id)
     tarikhdaDiwangalinta=models.CharField(max_length=12,blank=True,null=True)
     def __str__(self) -> str:

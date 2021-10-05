@@ -96,8 +96,8 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody style="font-size: large;">
-               
+              <tbody class="tbodyC" style="font-size: large;">
+                
               </tbody>
           
             </table>
@@ -119,9 +119,39 @@
 
 
   <script>
-    function diwangaliBuundoyinka(){
+   $('document').ready(function () {
+      $.ajax({
+      type:'POST',
+      url:'/hel_imtixanka_xalqadaan/',
+      data:{
+        'xalqada':'{{xalqada}}',
+        'raqamka':'{{raqamka}}',
+        'csrfmiddlewaretoken': '{{ csrf_token }}',
+      },
+      success:function (data) {
+        id=0;
+        var Jimtixanadka =[];
+        data['dhamaanMaadonyinkaArdayga'];
+        data['magacayadaArdayda'].forEach(magacayadaArdayga => {
+          id++;
+          $('.tbodyC').append(
+            `
+            <tr>
+              <td>
+                `+id+`  
+              </td>
+              <td>`+magacayadaArdayga+` </td>
+            </tr>
+            `
+          )
+        });
+         
+        }
+      })
+      
 
-    }
+  
+   })
 
   </script>
 </body>

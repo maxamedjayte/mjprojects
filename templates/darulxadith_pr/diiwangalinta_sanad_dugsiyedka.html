@@ -29,14 +29,14 @@
                                 </div>
                                 <div class="card-block">
 
-                                    <form method="post" enctype="multipart/form-data" action="/diwangalinta_sanad_dugsiyedka/">
+                                    <form method="post" id="form" enctype="multipart/form-data" action="/diwangalinta_sanad_dugsiyedka/">
 
                                         {% csrf_token %}
                                         <div class="form-group row">
                                             <label class="col-sm-2 col-form-label">تاريخ عام الدراسي</label>
                                             <div class="row" >
                                                 <div class="col-sm-6">
-                                                    <input name="from-date" placeholder="من التاريخ" type="text" class="form-control" id="hijri-picker-from" required>
+                                                    <input name="from-date" placeholder="من التاريخ"  type="text" class="form-control" id="hijri-picker-from" required>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <input name="to-date" placeholder="الي التاريخ" type="text" class="form-control" id="hijri-picker-to" required>
@@ -58,9 +58,47 @@
                                         </div>
                                         <br>
 
-                                        <button type="submit" name="submit"
+                                        <button type="button" id="btnsubmit"
                                             class="btn btn-success waves-effect waves-light">سجل</button>
                                     </form>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 style="font-family: 'Amiri', serif;">كل الاعوام الدراسي</h5>
+                                    <span>Add class of <code>.form-control</code> with
+                                        <code>&lt;input&gt;</code> tag</span>
+                                </div>
+                                <div class="card-block">
+                                    <table class="table">
+                                        <thead class="thead-dark">
+                                            <th width="10px" >الرقم</th>
+                                            <th>العام الدراسي</th>
+                                            
+                                            <th>الموافق من</th>
+                                            <th>الموافق الي</th>
+                                            <th width='10px' >Action</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for sanadDugsiyedka in sanadDugsiyeedyada %}
+                                            <tr>
+                                                 <td>{{ forloop.counter }}</td>
+                                                <td>{{ sanadDugsiyedka }}</td>
+                                                <td>{{ sanadDugsiyedka.taariikhdaBillowgaMiladi }}</td>
+                                                <td>{{ sanadDugsiyedka.taariikhdaDhamaadkaMIladi }}</td>
+                                                
+                                                <td><a href="#!" ><i
+                                                    class="icon feather icon-edit f-w-600 f-16 m-r-15 text-c-green"></i></a><a
+                                                href="#!" onclick="deleteSanadDugsiyedkan('{{sanadDugsiyedka.pk}}')"><i
+                                                    class="feather icon-trash-2 f-w-600 f-16 text-c-red"></i></a>
+                                        </td>
+                                            </tr>
+                                               
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                  
+                                   
                                 </div>
                             </div>
 
@@ -81,6 +119,29 @@
 
 
 <script type="text/javascript">
+    $('#btnsubmit').click(function () {
+        document.getElementById("form").submit();
+
+    })
+
+    function deleteSanadDugsiyedkan(pk) {
+        swal({
+            title: "Delete SanadDugisyeedkan ?"+pk,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            })
+            .then((willDelete) => {
+            if (willDelete) {
+                swal("Waad Delete gareeysay SanadDugsiyedka!", {
+                icon: "success",
+                });
+            } else {
+                
+            }
+        });
+    }
+
     $(function () {
         initFromHijri();
         initToHijri();
