@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.fields import DateField
+from django.utils import timezone
 # Create your models here.
 class SanadDugsiyeedka(models.Model):
     taariikhdaBillowgaHijri = models.CharField(max_length=10)
@@ -96,7 +97,7 @@ class Mulaaxadaat(models.Model):
     magacaArdayga=models.ForeignKey(Ardada,on_delete=models.CASCADE)
     cinwanka=models.TextField()
     faahfahin=models.TextField()
-    waqtiga=models.DateField(auto_now=True)
+    waqtiga=models.DateField(default=timezone.now)
 
     def __str__(self):
         return str(self.magacaArdayga)+self.cinwanka

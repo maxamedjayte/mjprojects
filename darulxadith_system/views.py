@@ -286,6 +286,36 @@ def xogtaArdaygan(request,magaca_ardayga):
         'maadoyinka':dhamaanMaadonyinkaArdayga,
     }
     return render(request,'darulxadith_pr/xogta-ardaygan.html',data)
+
+def xadiriskaArdaygaan(request,magaca_ardaygaan):
+    xaadiriska=Xaadiriska.objects.filter(magacaArdayga=Ardada.objects.get(magacaArdayga=magaca_ardaygaan))
+    xaadiriskaArdaygaan=[]
+    if request.POST:
+        for xaadiritanka in xaadiriska:
+            xaadiriskaArdaygaan=[
+                {
+                    'id':xaadiritanka.pk,
+                    'magacaArdayga':xaadiritanka.magacaArdayga.magacaArdayga,
+                    'xalqada':str(xaadiritanka.xalqada),
+                    'sabti1':xaadiritanka.sabti1, 'sabti2':xaadiritanka.sabti2, 'sabti3':xaadiritanka.sabti3, 'sabti4':xaadiritanka.sabti4,
+                    'axad1':xaadiritanka.axad1, 'axad2':xaadiritanka.axad2, 'axad3':xaadiritanka.axad3,'axad4':xaadiritanka.axad4,
+                    'isniin1':xaadiritanka.isniin1,'isniin2':xaadiritanka.isniin2,'isniin3':xaadiritanka.isniin3,'isniin4':xaadiritanka.isniin4,
+                    'talaado1':xaadiritanka.talaado1,'talaado2':xaadiritanka.talaado2,'talaado3':xaadiritanka.talaado3,'talaado4':xaadiritanka.talaado4,
+                    'arbaco1':xaadiritanka.arbaco1,'arbaco2':xaadiritanka.arbaco2,'arbaco3':xaadiritanka.arbaco3,'arbaco4':xaadiritanka.arbaco4,
+                    'waqtiga':xaadiritanka.waqtiga,'waqtigaLaQadayo':xaadiritanka.waqtigaLaQadayo
+
+                
+                }
+            ]
+        return JsonResponse({'xaadiriska':xaadiriskaArdaygaan})
+
+        
+    data={
+        'xaadiriska':xaadiriska,
+        'ardaygan':Ardada.objects.get(magacaArdayga=magaca_ardaygaan)
+    }
+    return render(request,'darulxadith_pr/xaadiriska_ardaygan.html',data)
+
 def hasImtixanFuntion(request):
     hasImtixan= False
     if Natiijada.objects.filter(magacaArdayga=Ardada.objects.get(magacaArdayga=request.POST.get('magacaArdayga'))).filter(sanadka=SanadDugsiyeedka.objects.get(id=request.POST.get('sanadka'))).exists():
@@ -377,26 +407,34 @@ def hel_imtixankaXalqadaan(request):
     imtixanadka=Natiijada.objects.filter(xalqada=xalqadaan)
     dhamaanMaadonyinkaArdayga=Mustawaha.objects.get(magacaMustawaha=xalqada).maadoyinka.split(',')
     magacayadaArdayda=[]
-    buundadaArdaygaan=[]
 
-    # all_objects = [*imtixanadka]
-    # data = serializers.serialize("json", imtixanadka)
     
     for imt in imtixanadka:
         if str(imt.magacaArdayga) not in magacayadaArdayda:
            magacayadaArdayda.append(str(imt.magacaArdayga))
-           
-    
+
     return JsonResponse({
-        # 'imtixanadka':list(imtixanadka.values()),
         'magacayadaArdayda':magacayadaArdayda,
-        'dhamaanMaadonyinkaArdayga':dhamaanMaadonyinkaArdayga,
-        'magacyadaImtixanada':magacyadaImtixanada,
-        # 'xalqadaan':xalqadaan,
+        })
+def helImtixaankaArdaygaan(request):
+    xalqada=request.POST.get('xalqada')
+    raqamka=request.POST.get('raqamka')
+    ardaygan=request.POST.get('magacayadaArdayga')
+    xalqadaan=Xalqada.objects.filter(mustawaha=Mustawaha.objects.get(magacaMustawaha=xalqada)).get(magacaXalqada=raqamka)
+    imtixanadka=Natiijada.objects.filter(xalqada=xalqadaan)
+    dhamaanMaadonyinkaArdayga=Mustawaha.objects.get(magacaMustawaha=xalqada).maadoyinka.split(',')
+    buundadaArdaygaan=[]
+
+    for maadada in dhamaanMaadonyinkaArdayga:
+            totalkaMadadan=0
+            for natijada in imtixanadka.filter(maadada=maadada).filter(magacaArdayga=Ardada.objects.get(magacaArdayga=ardaygan)):
+                totalkaMadadan=totalkaMadadan+natijada.buundada
+            buundadaArdaygaan.append(totalkaMadadan)
+    return JsonResponse({
+        'buundadaArdaygaan':buundadaArdaygaan,
         'xalqada':xalqada,
         'raqamka':raqamka
-        })
-
+    })
 
 def xaadiriska(request):
     xalqada=Xalqada.objects.all()
