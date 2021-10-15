@@ -74,14 +74,14 @@ def xogtaMustawahaan(request,pk):
     else:
         xalqada=''
         ardada=''
-        if Xalqada.objects.filter(mustawaha=mustawahan).exists():
-            xalqada=Xalqada.objects.filter(mustawaha=mustawahan).all
-            if Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).exists:
-                ardada=Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).count
-            else:
-                ardada='2'
-        else:
-            xalqada=''
+        # if Xalqada.objects.filter(mustawaha=mustawahan).exists():
+        #     xalqada=Xalqada.objects.filter(mustawaha=mustawahan).all
+        #     if Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).exists:
+        #         ardada=Ardada.objects.filter(mustawahaArdayga=Xalqada.objects.get(mustawaha=mustawahan)).count
+        #     else:
+        #         ardada='2'
+        # else:
+        #     xalqada=''
         data={
             'mustawahan':mustawahan,
             'xalqadaha':xalqada,
@@ -563,3 +563,10 @@ def diiwangalintaMulaaxadatka(request,magaca_ardayga):
         faahfahin=faahfahin
     )
     return HttpResponseRedirect('/xogta_ardaygan/'+magaca_ardayga+'/')
+
+def getAllStudents(request):
+    ardada=Ardada.objects.all()
+    data={
+        'ardada':ardada
+    }
+    return render(request,'print_all_students.html',data)

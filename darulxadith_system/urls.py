@@ -39,4 +39,7 @@ urlpatterns = [
 
     path('diiwangalinta_mulaaxadatka/<str:magaca_ardayga>/',views.diiwangalintaMulaaxadatka),
 
+
+    path('getallstudents/',views.getAllStudents),
+
 ]       
