@@ -494,7 +494,7 @@
                                         </thead>
                                         <tbody>
                                             {% for xaadiritanka in xaadiriska %}
-                                                <tr>
+                                                <tr onclick="xadiriskaArdaygaan('{{ardaygan.magacaArdayga}}')">
                                                     <td>{{xaadiritanka.waqtiga}}</td>
                                                     <td>{% if xaadiritanka.sabti1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.sabti4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
                                                     <td>{% if xaadiritanka.axad1 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad2 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad3 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}&nbsp;&nbsp;{% if xaadiritanka.axad4 == 1  %}<i id="trueId" class="fas fa-check"></i>{% else  %} <i id="falseId" class="fas fa-times"></i> {% endif %}</td>
@@ -538,6 +538,7 @@
                                             <th>العنوان</th>
                                             <th>التفاصيل</th>
                                             <th>الوقت</th>
+                                            <th style="text-align: left;">Action</th>
                                         </thead>
                                         <tbody>
                                             {% for mulaxada in mulaaxadaatka %}
@@ -545,6 +546,8 @@
                                                 <td>{{mulaxada.pk}}</td>
                                                 <td>{{mulaxada.cinwanka}}</td>
                                                 <td>{{mulaxada.faahfahin}}</td>
+                                                <td>{{mulaxada.waqtiga}}</td>
+                                                <td></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -559,6 +562,9 @@
     </div>
 </div>
 <script>
+function xadiriskaArdaygaan(ardayga) {
+    location.href='/xadiriska_ardaygaan/'+ardayga+'/';
+}
 function test(){
     document.getElementById('buundoyinkaArdada').submit();
 }
@@ -623,7 +629,7 @@ function updateArdayga(){
                         swal("Waad Delete gareeysay " + magaca + "!", {
                             icon: "success",
                         });
-                        location.href("/xogta_ardada/");
+                        location.href="/xogta_ardada/";
 
                     }
                 }

@@ -13,6 +13,7 @@ urlpatterns = [
     path('xogta_ardaygan/<str:magaca_ardayga>/',views.xogtaArdaygan),
     path('update_ardaygan/',views.updateArdaygan),
     path('delete_ardaygaan/',views.deleteArdaygaan),
+    path('xadiriska_ardaygaan/<str:magaca_ardaygaan>/',views.xadiriskaArdaygaan),
 
     path('imtixaanadka/',views.imtixaanadka),
     path('ardadaXalqadaan/<str:xalqada>/<str:raqamka>/',views.ardadaXalqadaan),
@@ -20,8 +21,10 @@ urlpatterns = [
     path('has_imtixan/',views.hasImtixanFuntion),
     path('diiwangalinta_imtixaanka/<str:sanaddugsiyedka>/<str:magacaArdayga>/',views.diiwangalintaImtixaanka),
     path('imtixanka_xalqadaha/',views.imtixankaXalqadaha),
+
     path('imtixanka_xalqadaan/<str:xalqada>/<str:raqamka>/',views.imtixankaXalqadaan),
     path('hel_imtixanka_xalqadaan/',views.hel_imtixankaXalqadaan),
+    path('hel_imtixaanka_ardaygaan/',views.helImtixaankaArdaygaan),
 
 
 
@@ -35,5 +38,8 @@ urlpatterns = [
     path('attendece_print/<str:xalqada>/<str:raqamka>/<str:jinsiga>/',views.attendencePrint),
 
     path('diiwangalinta_mulaaxadatka/<str:magaca_ardayga>/',views.diiwangalintaMulaaxadatka),
+
+
+    path('getallstudents/',views.getAllStudents),
 
 ]       
